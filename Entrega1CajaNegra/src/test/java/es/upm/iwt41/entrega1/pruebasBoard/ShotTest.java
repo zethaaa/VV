@@ -24,13 +24,8 @@ public class ShotTest {
     delimiterString = ",")
     void moverShotSinAlien(int x, int y, int esperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
-        Field shotField = Board.class.getDeclaredField("shot");
-        shotField.setAccessible(true);
-        shotField.set(board, newShot);
-
-        var method = Board.class.getDeclaredMethod("update_shots");
-        method.setAccessible(true);
-        method.invoke(board);
+        board.setShot(newShot);
+        board.update_shots();
 
         assertEquals( esperado, board.getShot().getY());
 
@@ -43,20 +38,16 @@ public class ShotTest {
             lineSeparator = "\n",
             delimiterString = ",")
     void moverShotHaciaAlien(int x, int y, int esperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Shot newShot = new Shot(x, y); //posición real: 192, 41
-        Field shotField = Board.class.getDeclaredField("shot");
-        shotField.setAccessible(true);
-        shotField.set(board, newShot);
+        Shot newShot = new Shot(x, y);
+        board.setShot(newShot);
 
-
-        var method = Board.class.getDeclaredMethod("update_shots");
-        method.setAccessible(true);
-        method.invoke(board);
+        int previous_deaths = board.getDeaths();
+        board.update_shots();
 
         assertEquals(esperado, board.getShot().getY());
-        assertFalse(board.getShot().isVisible());
+        assertEquals(previous_deaths+1, board.getDeaths());
         assertTrue(board.getAliens().get(14).isDying());
-        //contador deaths no accesible
+
     }
 
     @org.junit.jupiter.params.ParameterizedTest
@@ -65,15 +56,10 @@ public class ShotTest {
             "194, 6, 1"})
     void moverShotLimitesTablero(int x, int y, int esperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
-        Field shotField = Board.class.getDeclaredField("shot");
-        shotField.setAccessible(true);
-        shotField.set(board, newShot);
+        board.setShot(newShot);
 
 
-        var method = Board.class.getDeclaredMethod("update_shots");
-        method.setAccessible(true);
-        method.invoke(board);
-
+        board.update_shots();
         assertEquals(esperado, board.getShot().getY());
         assertTrue(board.getShot().isVisible());
     }
@@ -81,14 +67,10 @@ public class ShotTest {
     @Test
     void moverShotFueralimites() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(194, 4);
-        Field shotField = Board.class.getDeclaredField("shot");
-        shotField.setAccessible(true);
-        shotField.set(board, newShot);
+        board.setShot(newShot);
 
 
-        var method = Board.class.getDeclaredMethod("update_shots");
-        method.setAccessible(true);
-        method.invoke(board);
+        board.update_shots();
 
         assertEquals(3, board.getShot().getY());
         assertFalse(board.getShot().isVisible());

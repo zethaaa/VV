@@ -16,11 +16,12 @@ public class ShotTest {
             numLinesToSkip= 1,
             lineSeparator = "\n",
             delimiterString = ",")
-    void initShotCorrecto(int x, int y)
+    void construirShotCorrecto(int x, int y)
     {
         Shot shot = new Shot(x, y);
 
         boolean resultado = shot.getX() == x+H_SPACE  && shot.getY() == y-V_SPACE;
         assertTrue(resultado);
     }
+
 }
