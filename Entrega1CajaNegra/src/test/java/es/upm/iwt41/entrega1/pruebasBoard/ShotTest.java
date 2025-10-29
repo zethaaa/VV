@@ -76,4 +76,14 @@ public class ShotTest {
         assertFalse(board.getShot().isVisible());
     }
 
+    @Test
+    void gameInit(){
+        assertNotEquals(null,this.board.getPlayer());
+        assertNotEquals(null,this.board.getShot());
+        assertEquals(24,this.board.getAliens().size());
+        assertEquals(18,this.board.getAliens().get(1).getX()-this.board.getAliens().get(0).getX());
+        assertEquals(18,this.board.getAliens().get(6).getY()-this.board.getAliens().get(0).getY());
+    }
+
+
 }
