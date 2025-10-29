@@ -23,21 +23,21 @@ public class PlayerTest
     }
 
    @Test
-    void keyReleasedRight(){
+    void testKeyReleasedRight(){
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(keyEvent);
         assertEquals(0, player.getDx());
     }
 
     @Test
-    void keyReleasedLeft(){
+    void TestkeyReleasedLeft(){
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(keyEvent);
         assertEquals(0, player.getDx());
     }
 
     @Test
-    void keyReleasedUp(){
+    void testKeyReleasedUp(){
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED);
         int dx_anterior = player.getDx();
         player.keyReleased(keyEvent);
@@ -47,7 +47,7 @@ public class PlayerTest
 
 
     @Test
-    public void testKeyPressed() {
+    public void testKeyPressedRight() {
         // Creación del evento que simula pulsar la flecha derecha
         KeyEvent evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
@@ -61,10 +61,11 @@ public class PlayerTest
         // Afirmación
         player.keyPressed(evento);
         assertEquals(2, player.getDx());
-
-
+    }
+    @Test
+    void TestkeyPressedLeft(){
         // Creación del evento que simula pulsar la flecha izquierda
-         evento = new KeyEvent(
+        KeyEvent evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
                 KeyEvent.KEY_PRESSED,         // tipo
                 System.currentTimeMillis(),   // timestamp
@@ -76,9 +77,12 @@ public class PlayerTest
         // Afirmación
         player.keyPressed(evento);
         assertEquals(-2, player.getDx());
+    }
 
-        // Creación del evento que simula pulsar la flecha izquierda
-        evento = new KeyEvent(
+    @Test
+    void testKeyPressedUp(){
+        KeyEvent // Creación del evento que simula pulsar la flecha izquierda
+                evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
                 KeyEvent.KEY_PRESSED,         // tipo
                 System.currentTimeMillis(),   // timestamp
