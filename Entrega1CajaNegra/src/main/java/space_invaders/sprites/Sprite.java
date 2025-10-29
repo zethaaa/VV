@@ -71,6 +71,9 @@ public abstract class Sprite {
         return x;
     }
 
+    public int getDx(){
+        return dx;
+    }
     public void setDying(boolean dying) {
 
         this.dying = dying;
