@@ -48,8 +48,6 @@ public class PlayerTest
 
     @Test
     public void testKeyPressed() {
-        // Instancia del objeto a testear
-
         // Creación del evento que simula pulsar la flecha derecha
         KeyEvent evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
@@ -61,7 +59,8 @@ public class PlayerTest
         );
 
         // Afirmación
-        assertEquals(2, player.getdx;
+        player.keyPressed(evento);
+        assertEquals(2, player.getDx());
 
 
         // Creación del evento que simula pulsar la flecha izquierda
@@ -75,7 +74,8 @@ public class PlayerTest
         );
 
         // Afirmación
-        assertEquals(-2, player.keyPressed(evento));
+        player.keyPressed(evento);
+        assertEquals(-2, player.getDx());
 
         // Creación del evento que simula pulsar la flecha izquierda
         evento = new KeyEvent(
@@ -88,7 +88,8 @@ public class PlayerTest
         );
 
         // Afirmación
-        assertEquals(0, player.keyPressed(evento));
+        player.keyPressed(evento);
+        assertEquals(0, player.getDx());
     }
 }
 
