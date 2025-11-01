@@ -28,6 +28,7 @@ public class ShotTest {
         board.update_shots();
 
         assertEquals( esperado, board.getShot().getY());
+        assertFalse(board.getAliens().get(14).isDying());
 
     }
 
