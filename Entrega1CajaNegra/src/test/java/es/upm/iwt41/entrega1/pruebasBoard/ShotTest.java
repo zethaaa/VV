@@ -86,4 +86,27 @@ public class ShotTest {
     }
 
 
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "1, Game Over",
+            "24, Game won!"})
+    void pruebaUpdate(int deaths, String salida) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        board.setDeaths(deaths);
+
+        int anterior = board.getAliens().get(0).getX();
+        board.update();
+
+        assertEquals(salida, board.getMessage());
+
+        if(deaths == 1) {
+            assertTrue(board.isInGame());
+            assertNotEquals(anterior, board.getAliens().get(0).getX());
+        }
+        else {assertFalse(board.isInGame());
+        assertEquals(anterior, board.getAliens().get(0).getX());}
+    }
+
+
+
 }

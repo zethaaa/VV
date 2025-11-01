@@ -296,7 +296,7 @@ public class Board extends JPanel {
      * ({@link Commons#NUMBER_OF_ALIENS_TO_DESTROY}), el juego se marca como finalizado,
      * y se establece el mensaje "<code>Game won!</code>".</dd></dl>
      */
-    private void update() {
+    public void update() {
 
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
 
@@ -332,6 +332,8 @@ public class Board extends JPanel {
      * cambia su imagen a explosión (<span class="alert-small">⛔🧪</span> no necesario evaluar este resultado), y se incrementa el contador `deaths`. 
      * Los disparos que salen del tablero por arriba se eliminan.</dd></dl>
      */
+
+
     public void update_shots() {
         if (this.shot.isVisible()) {
 
