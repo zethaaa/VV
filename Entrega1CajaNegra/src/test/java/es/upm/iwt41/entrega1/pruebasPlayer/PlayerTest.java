@@ -110,13 +110,14 @@ public class PlayerTest {
         if (dx == 2) {
             KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
             player.keyPressed(evento);
+
         } else if (dx == -2) {
             KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
             player.keyPressed(evento);
         }
 
+        player.act();
         assertEquals(salida, player.getX());
-
     }
 
 }
