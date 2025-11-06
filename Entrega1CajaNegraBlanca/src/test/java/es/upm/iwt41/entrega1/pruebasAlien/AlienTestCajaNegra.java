@@ -1,17 +1,14 @@
 package es.upm.iwt41.entrega1.pruebasAlien;
 
-import main.Board;
 import main.Commons;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AlienTest {
+public class AlienTestCajaNegra {
     private Alien alienCorrectoNominal;
     private Alien alienCorrectoMax_x;
     private Alien alienCorrectoMin_x;

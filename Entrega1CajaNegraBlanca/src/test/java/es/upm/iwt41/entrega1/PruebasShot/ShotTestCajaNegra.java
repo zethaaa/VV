@@ -1,12 +1,10 @@
 package es.upm.iwt41.entrega1.PruebasShot;
 
-import main.Commons;
-import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Shot;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ShotTest {
+public class ShotTestCajaNegra {
     private final int H_SPACE = 6;
     private final int V_SPACE = 1;
 

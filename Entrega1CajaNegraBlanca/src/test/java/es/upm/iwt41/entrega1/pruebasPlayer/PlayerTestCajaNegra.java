@@ -1,21 +1,17 @@
 package es.upm.iwt41.entrega1.pruebasPlayer;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Player;
 import java.awt.TextField;
 import java.awt.event.KeyEvent;
 
-import java.awt.event.KeyEvent;
-import java.awt.TextField;
-import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class PlayerTest {
+public class PlayerTestCajaNegra {
     Player player;
 
     @BeforeEach

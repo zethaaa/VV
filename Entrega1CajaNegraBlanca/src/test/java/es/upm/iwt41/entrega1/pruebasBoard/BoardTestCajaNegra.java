@@ -3,12 +3,12 @@ import main.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Shot;
-import java.lang.reflect.Field;
+
 import java.lang.reflect.InvocationTargetException;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ShotTest {
+public class BoardTestCajaNegra {
 
     private Board board;
 
