@@ -99,5 +99,40 @@ public class BoardTestCajaBlanca {
     }
 
 
+    @Test
+    void gameInitPrimerCamino(){
+        this.board = new Board();
+        assertNotEquals(null,this.board.getPlayer());
+        assertNotEquals(null,this.board.getShot());
+        assertEquals(24,this.board.getAliens().size());
+        assertEquals(18,this.board.getAliens().get(1).getX()-this.board.getAliens().get(0).getX());
+        assertEquals(18,this.board.getAliens().get(6).getY()-this.board.getAliens().get(0).getY());
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "1, Game Over",
+            "24, Game won!"})
+    void pruebaUpdatePrimerSegundoCamino(int deaths, String salida) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        board.setDeaths(deaths);
+
+        int anterior = board.getAliens().get(0).getX();
+        board.update();
+
+        assertEquals(salida, board.getMessage());
+
+        if(deaths == 1) {
+            assertTrue(board.isInGame());
+            assertNotEquals(anterior, board.getAliens().get(0).getX());
+        }
+        else {assertFalse(board.isInGame());
+            assertEquals(anterior, board.getAliens().get(0).getX());}
+    }
+
+
+
+
+
+
 
 }
