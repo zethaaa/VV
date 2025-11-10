@@ -116,5 +116,12 @@ public class PlayerTestCajaNegra {
         assertEquals(salida, player.getX());
     }
 
+    @Test
+    void initPlayer(){
+        Player p = new Player();
+        assertEquals(179, p.getX());
+        assertEquals(280, p.getY());
+    }
+
 }
 
