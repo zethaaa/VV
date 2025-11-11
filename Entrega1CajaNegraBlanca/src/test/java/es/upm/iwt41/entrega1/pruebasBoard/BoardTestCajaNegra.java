@@ -31,12 +31,13 @@ public class BoardTestCajaNegra {
     numLinesToSkip= 1,
     lineSeparator = "\n",
     delimiterString = ",")
-    void moverShotSinAlien(int x, int y, int esperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    void moverShotSinAlien(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
         board.setShot(newShot);
         board.update_shots();
 
-        assertEquals( esperado, board.getShot().getY());
+        assertEquals( esperadoY, board.getShot().getY());
+        assertEquals(esperadoX, board.getShot().getX());
         assertFalse(board.getAliens().get(14).isDying());
 
     }
@@ -47,14 +48,15 @@ public class BoardTestCajaNegra {
             numLinesToSkip= 1,
             lineSeparator = "\n",
             delimiterString = ",")
-    void moverShotHaciaAlien(int x, int y, int esperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    void moverShotHaciaAlien(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
         board.setShot(newShot);
 
         int previous_deaths = board.getDeaths();
         board.update_shots();
 
-        assertEquals(esperado, board.getShot().getY());
+        assertEquals(esperadoY, board.getShot().getY());
+        assertEquals(esperadoX, board.getShot().getX());
         assertEquals(previous_deaths+1, board.getDeaths());
         assertTrue(board.getAliens().get(14).isDying());
 
