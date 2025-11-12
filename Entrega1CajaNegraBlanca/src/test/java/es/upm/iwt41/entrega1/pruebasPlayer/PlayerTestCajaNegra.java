@@ -20,21 +20,21 @@ public class PlayerTestCajaNegra {
     }
 
     @Test
-    void testKeyReleasedRight() {
+    void keyReleasedRight() {
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(keyEvent);
         assertEquals(0, player.getDx());
     }
 
     @Test
-    void TestkeyReleasedLeft() {
+    void keyReleasedLeft() {
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
         player.keyReleased(keyEvent);
         assertEquals(0, player.getDx());
     }
 
     @Test
-    void testKeyReleasedUp() {
+    void keyReleasedUp() {
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED);
         int dx_anterior = player.getDx();
         player.keyReleased(keyEvent);
@@ -43,7 +43,7 @@ public class PlayerTestCajaNegra {
 
 
     @Test
-    public void testKeyPressedRight() {
+    public void keyPressedRight() {
         // Creación del evento que simula pulsar la flecha derecha
         KeyEvent evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
@@ -60,7 +60,7 @@ public class PlayerTestCajaNegra {
     }
 
     @Test
-    void TestkeyPressedLeft() {
+    void KeyPressedLeft() {
         // Creación del evento que simula pulsar la flecha izquierda
         KeyEvent evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
@@ -77,7 +77,7 @@ public class PlayerTestCajaNegra {
     }
 
     @Test
-    void testKeyPressedUp() {
+    void keyPressedUp() {
         KeyEvent // Creación del evento que simula pulsar la flecha izquierda
                 evento = new KeyEvent(
                 new TextField(),              // componente origen del evento
@@ -99,7 +99,7 @@ public class PlayerTestCajaNegra {
             numLinesToSkip= 1,
             lineSeparator = "\n",
             delimiterString = ",")
-    void pruebaAct(int x, int dx, int salida) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    void actPlayer(int x, int dx, int salida) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         player.setX(x);
 
 

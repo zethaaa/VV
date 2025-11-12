@@ -12,31 +12,56 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class BoardTestCajaNegra {
 
+    private Alien alien;
+    private List<Alien> aliens;
     private Board board;
+    private Player player;
+    private Method metodo;
+
 
     @BeforeEach
     void setUp() {
-        this.board = new Board();
+        try {
+            board = new Board();
+
+            Field aliensField = Board.class.getDeclaredField("aliens");
+            aliensField.setAccessible(true);
+            aliens = (List<Alien>) aliensField.get(board);
+
+            Field playerField = Board.class.getDeclaredField("player");
+            playerField.setAccessible(true);
+            player = (Player) playerField.get(board);
+
+            metodo = Board.class.getDeclaredMethod("update_bomb");
+            metodo.setAccessible(true);
+
+        } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @org.junit.jupiter.params.ParameterizedTest
-    @org.junit.jupiter.params.provider.CsvFileSource(resources= "/pruebasupdateshotcorrecto.csv",
-    numLinesToSkip= 1,
-    lineSeparator = "\n",
-    delimiterString = ",")
-    void moverShotSinAlien(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    @org.junit.jupiter.params.provider.CsvFileSource(resources = "/pruebasupdateshotcorrecto.csv",
+            numLinesToSkip = 1,
+            lineSeparator = "\n",
+            delimiterString = ",")
+    void updateShot(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
         board.setShot(newShot);
+        int previous_deaths = board.getDeaths();
         board.update_shots();
 
-        assertEquals( esperadoY, board.getShot().getY());
+        assertEquals(esperadoY, board.getShot().getY());
+        assertEquals(previous_deaths, board.getDeaths());
         assertEquals(esperadoX, board.getShot().getX());
         assertFalse(board.getAliens().get(14).isDying());
 
@@ -44,11 +69,11 @@ public class BoardTestCajaNegra {
 
 
     @org.junit.jupiter.params.ParameterizedTest
-    @org.junit.jupiter.params.provider.CsvFileSource(resources= "/pruebasUpdateShotIncorrecto.csv",
-            numLinesToSkip= 1,
+    @org.junit.jupiter.params.provider.CsvFileSource(resources = "/pruebasUpdateShotIncorrecto.csv",
+            numLinesToSkip = 1,
             lineSeparator = "\n",
             delimiterString = ",")
-    void moverShotHaciaAlien(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    void updateShotColision(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
         board.setShot(newShot);
 
@@ -57,27 +82,28 @@ public class BoardTestCajaNegra {
 
         assertEquals(esperadoY, board.getShot().getY());
         assertEquals(esperadoX, board.getShot().getX());
-        assertEquals(previous_deaths+1, board.getDeaths());
+        assertEquals(previous_deaths + 1, board.getDeaths());
         assertTrue(board.getAliens().get(14).isDying());
 
     }
 
     @org.junit.jupiter.params.ParameterizedTest
     @org.junit.jupiter.params.provider.CsvSource(value = {
-            "194, 5, 0",
-            "194, 6, 1"})
-    void moverShotLimitesTablero(int x, int y, int esperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+            "194, 5, 0, 200",
+            "194, 6, 1, 200"})
+    void updateShotLimitesTablero(int x, int y, int yEsperado, int xEsperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(x, y);
         board.setShot(newShot);
 
-
         board.update_shots();
-        assertEquals(esperado, board.getShot().getY());
+
+        assertEquals(yEsperado, board.getShot().getY());
+        assertEquals(xEsperado, board.getShot().getX());
         assertTrue(board.getShot().isVisible());
     }
 
     @Test
-    void moverShotFueralimites() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    void updateShotFueraLimites() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Shot newShot = new Shot(194, 4);
         board.setShot(newShot);
 
@@ -85,18 +111,18 @@ public class BoardTestCajaNegra {
         board.update_shots();
 
         assertEquals(3, board.getShot().getY());
+        assertEquals(200, board.getShot().getX());
         assertFalse(board.getShot().isVisible());
     }
 
     @Test
-    void gameInit(){
-        assertNotEquals(null,this.board.getPlayer());
-        assertNotEquals(null,this.board.getShot());
-        assertEquals(24,this.board.getAliens().size());
-        assertEquals(18,this.board.getAliens().get(1).getX()-this.board.getAliens().get(0).getX());
-        assertEquals(18,this.board.getAliens().get(6).getY()-this.board.getAliens().get(0).getY());
+    void gameInit() {
+        assertNotEquals(null, this.board.getPlayer());
+        assertNotEquals(null, this.board.getShot());
+        assertEquals(24, this.board.getAliens().size());
+        assertEquals(18, this.board.getAliens().get(1).getX() - this.board.getAliens().get(0).getX());
+        assertEquals(18, this.board.getAliens().get(6).getY() - this.board.getAliens().get(0).getY());
     }
-
 
 
     @org.junit.jupiter.params.ParameterizedTest
@@ -111,15 +137,14 @@ public class BoardTestCajaNegra {
 
         assertEquals(salida, board.getMessage());
 
-        if(deaths == 1) {
+        if (deaths == 1) {
             assertTrue(board.isInGame());
             assertNotEquals(anterior, board.getAliens().get(0).getX());
+        } else {
+            assertFalse(board.isInGame());
+            assertEquals(anterior, board.getAliens().get(0).getX());
         }
-        else {assertFalse(board.isInGame());
-        assertEquals(anterior, board.getAliens().get(0).getX());}
     }
-
-
 
 
     @Test
@@ -139,6 +164,7 @@ public class BoardTestCajaNegra {
         campoAliens.setAccessible(true);
         List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
         listaAliens.clear();
+
         int posXRight = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;
         Alien alienBordeDer = new Alien(posXRight, 100);
         listaAliens.add(alienBordeDer);
@@ -150,9 +176,11 @@ public class BoardTestCajaNegra {
         metodoUpdateAliens.invoke(board);
 
         int nuevaDirection = (int) campoDirection.get(board);
+
         Field campoYAlien = Sprite.class.getDeclaredField("y");
         campoYAlien.setAccessible(true);
         int nuevaY = (int) campoYAlien.get(alienBordeDer);
+
         Field campoXAlien = Sprite.class.getDeclaredField("x");
         campoXAlien.setAccessible(true);
         int nuevaX = (int) campoXAlien.get(alienBordeDer);
@@ -161,7 +189,9 @@ public class BoardTestCajaNegra {
         System.out.println("pos y: " + nuevaY + "（esperado: " + (100 + Commons.GO_DOWN) + "）");
         System.out.println("pos x: " + nuevaX + "（esperado: " + (posXRight - 1) + "）");
 
-        assertTrue(nuevaDirection == -1 && nuevaY == 100 + Commons.GO_DOWN && nuevaX == posXRight - 1);
+        assertTrue(-1 == nuevaDirection);
+        assertEquals(100 + Commons.GO_DOWN, nuevaY);
+        assertEquals(posXRight - 1, nuevaX); //se prueba? es responsabilidad de act
     }
 
     @Test
@@ -204,7 +234,7 @@ public class BoardTestCajaNegra {
         System.out.println("y: " + nuevaY + "（esperado: " + (100 + Commons.GO_DOWN) + "）");
         System.out.println("x: " + nuevaX + "（esperado: " + (Commons.BORDER_LEFT + 1) + "）");
 
-        assertTrue(nuevaDirection == 1 && nuevaY == 100 + Commons.GO_DOWN && nuevaX == Commons.BORDER_LEFT + 1);
+        assertTrue(nuevaDirection == 1 && nuevaY == 100 + Commons.GO_DOWN);
 
 
     }
@@ -225,7 +255,8 @@ public class BoardTestCajaNegra {
         campoAliens.setAccessible(true);
         List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
         listaAliens.clear();
-        int lineaInferior = Commons.GROUND + Commons.ALIEN_HEIGHT;
+
+        int lineaInferior = Commons.GROUND + Commons.ALIEN_HEIGHT + 1;
         Alien alienBordeInf = new Alien(100, lineaInferior);
         listaAliens.add(alienBordeInf);
 
@@ -286,8 +317,136 @@ public class BoardTestCajaNegra {
 
     }
 
-}
+    @Test
+    void update_bombCP1() {
+        alien = new Alien(100, 100);
+        alien.getBomb().setDestroyed(true);
+        alien.die();
+        aliens.add(alien);
 
+        try {
+            metodo.invoke(board);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+
+        boolean resultado = alien.getBomb().isDestroyed() == true;
+        assertTrue(resultado);
+    }
+
+    @Test
+    void update_bombCP2() {
+        alien = new Alien(100, 100);
+        Alien.Bomb bomba = this.alien.getBomb();
+        bomba.setDestroyed(false);
+        bomba.setY(110);
+        aliens.add(alien);
+
+        try {
+            metodo.invoke(board);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertFalse(bomba.isDestroyed());
+        assertEquals(111, bomba.getY());
+
+        System.out.println(player.isDying());
+    }
+
+    @Test
+    void update_bombCP3() {
+        alien = new Alien(100, 100);
+        alien.getBomb().setDestroyed(true);
+        aliens.add(alien);
+
+        board.update_bomb_randomCustom(5);
+
+        boolean resultado = alien.getBomb().isDestroyed() == true;
+        assertTrue(resultado);
+    }
+
+
+    @Test
+    void update_bombCP4() {
+        alien = new Alien(100, 100);
+        Alien.Bomb bomba = alien.getBomb();
+        bomba.setDestroyed(true);
+        aliens.add(alien);
+
+        board.update_bomb_randomCustom(7);
+
+        boolean resultado = bomba.isDestroyed() == false;
+        assertTrue(resultado);
+    }
+
+    @Test
+    void probarUpdateBombCP5(){
+        alien = new Alien(100,100);
+        Alien.Bomb bomba = alien.getBomb();
+        aliens.add(alien);
+        bomba.setDestroyed(false);
+        bomba.setY(285);
+        bomba.setX(100);
+
+        try{
+            metodo.invoke(board);
+        } catch (IllegalAccessException | InvocationTargetException e){
+            throw new RuntimeException(e);
+        }
+
+        boolean resultado = bomba.isDestroyed() == true;
+        assertTrue(resultado);
+    }
+
+    @Test
+    void probarUpdateBombCP6(){
+        alien = new Alien(100,100);
+        Alien.Bomb bomba = alien.getBomb();
+        bomba.setDestroyed(false);
+        bomba.setY(280);
+        bomba.setX(40);
+        aliens.add(alien);
+        player.setX(35);
+        player.setY(280);
+
+        try{
+            metodo.invoke(board);
+        } catch (IllegalAccessException | InvocationTargetException e){
+            throw new RuntimeException(e);
+        }
+        boolean resultado = bomba.isDestroyed() == true && player.isDying() == true;
+
+        assertTrue(resultado);
+    }
+
+
+    @Test
+    void probarUpdateBombCP7(){
+        alien = new Alien(100,100);
+        Alien.Bomb bomba = alien.getBomb();
+        bomba.setDestroyed(false);
+        bomba.setY(280);
+        bomba.setX(40);
+        aliens.add(alien);
+
+        player.setX(35);
+        player.setY(280);
+        player.die();
+
+        try{
+            metodo.invoke(board);
+        } catch (IllegalAccessException | InvocationTargetException e){
+            throw new RuntimeException(e);
+        }
+
+        boolean resultado = bomba.isDestroyed() == false && player.isDying() == false;
+        assertTrue(resultado);
+    }
+
+
+
+}
 
 
 

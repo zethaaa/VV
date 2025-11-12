@@ -522,6 +522,54 @@ public class Board extends JPanel {
 
     }
 
+    public void update_bomb_randomCustom(int random){
+        var generator = new Random();
+
+        for (Alien alien : this.aliens) {
+
+            int rand = generator.nextInt(15);
+            Alien.Bomb bomb = alien.getBomb();
+
+            if (random != Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
+
+                bomb.setDestroyed(false);
+                bomb.setX(alien.getX());
+                bomb.setY(alien.getY());
+            }
+
+            int bombX = bomb.getX();
+            int bombY = bomb.getY();
+            int playerX = this.player.getX();
+            int playerY = this.player.getY();
+
+            if (this.player.isVisible() && !bomb.isDestroyed()) {
+
+                if (bombX >= (playerX)
+                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
+                        && bombY >= (playerY)
+                        && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
+
+                    var ii = new ImageIcon(explImg);
+                    this.player.setImage(ii.getImage());
+                    this.player.setDying(true);
+                    bomb.setDestroyed(true);
+                }
+            }
+
+            if (!bomb.isDestroyed()) {
+
+                bomb.setY(bomb.getY() - Commons.BOMB_SPEED);
+
+                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
+
+                    bomb.setDestroyed(true);
+                }
+            }
+        }
+
+    }
+
+
     /**
      * {@summary <span class="alert-small">⛔🧪 </span> Función relacionada con la gestión de la interfaz.}
      * <br><br><span class="alert">⛔🧪 No es necesario probar este método mediante pruebas unitarias.</span>

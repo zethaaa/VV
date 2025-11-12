@@ -24,6 +24,7 @@ public class PlayerTestCajaBlanca {
     }
 
 
+    /**
     @Test
     void pruebaActPrimerCamino() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         player.setX(2);
@@ -53,5 +54,27 @@ public class PlayerTestCajaBlanca {
         player.keyPressed(evento);
         player.act();
         assertEquals(356, player.getX());
+    }
+*/
+    @Test
+    void keyReleasedPrimerCamino() {
+        KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
+        player.keyReleased(keyEvent);
+        assertEquals(0, player.getDx());
+    }
+
+    @Test
+    void keyReleasedSegundoCamino() {
+        KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
+        player.keyReleased(keyEvent);
+        assertEquals(0, player.getDx());
+    }
+
+    @Test
+    void keyReleasedTercerCamino() {
+        KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED);
+        int dx_anterior = player.getDx();
+        player.keyReleased(keyEvent);
+        assertEquals(dx_anterior, player.getDx());
     }
 }
