@@ -490,6 +490,7 @@ public class Board extends JPanel {
                 bomb.setY(alien.getY());
             }
 
+
             int bombX = bomb.getX();
             int bombY = bomb.getY();
             int playerX = this.player.getX();
