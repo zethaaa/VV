@@ -22,40 +22,6 @@ public class PlayerTestCajaBlanca {
     void setUp() {
         this.player = new Player();
     }
-
-
-    /**
-    @Test
-    void pruebaActPrimerCamino() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        player.setX(2);
-        KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
-        player.keyPressed(evento);
-        player.act();
-        assertEquals(2, player.getX());
-
-
-    }
-
-
-    @Test
-    void pruebaActSegundoCamino() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        player.setX(6);
-        KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
-        player.keyPressed(evento);
-        player.act();
-        assertEquals(8, player.getX());
-    }
-
-
-    @Test
-    void pruebaActTercerCamino() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        player.setX(356);
-        KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
-        player.keyPressed(evento);
-        player.act();
-        assertEquals(356, player.getX());
-    }
-*/
     @Test
     void keyReleasedPrimerCamino() {
         KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
@@ -78,5 +44,55 @@ public class PlayerTestCajaBlanca {
         assertEquals(dx_anterior, player.getDx());
     }
 
+    @Test
+    public void keyPressedPrimerCamino() {
+        // Creación del evento que simula pulsar la flecha derecha
+        KeyEvent evento = new KeyEvent(
+                new TextField(),              // componente origen del evento
+                KeyEvent.KEY_PRESSED,         // tipo
+                System.currentTimeMillis(),   // timestamp
+                0,                            // modificadores
+                KeyEvent.VK_RIGHT,            // código de la tecla
+                KeyEvent.CHAR_UNDEFINED
+        );
 
+        // Afirmación
+        player.keyPressed(evento);
+        assertEquals(2, player.getDx());
+    }
+
+    @Test
+    void KeyPressedSegundoCamino() {
+        // Creación del evento que simula pulsar la flecha izquierda
+        KeyEvent evento = new KeyEvent(
+                new TextField(),              // componente origen del evento
+                KeyEvent.KEY_PRESSED,         // tipo
+                System.currentTimeMillis(),   // timestamp
+                0,                            // modificadores
+                KeyEvent.VK_LEFT,            // código de la tecla
+                KeyEvent.CHAR_UNDEFINED
+        );
+
+        // Afirmación
+        player.keyPressed(evento);
+        assertEquals(-2, player.getDx());
+    }
+
+    @Test
+    void keyPressedTercerCamino() {
+        KeyEvent // Creación del evento que simula pulsar la flecha izquierda
+                evento = new KeyEvent(
+                new TextField(),              // componente origen del evento
+                KeyEvent.KEY_PRESSED,         // tipo
+                System.currentTimeMillis(),   // timestamp
+                0,                            // modificadores
+                KeyEvent.VK_UP,            // código de la tecla
+                KeyEvent.CHAR_UNDEFINED
+        );
+
+        // Afirmación
+        int dx_anterior = player.getDx()
+        player.keyPressed(evento);
+        assertEquals(dx_anterior, player.getDx());
+    }
 }
