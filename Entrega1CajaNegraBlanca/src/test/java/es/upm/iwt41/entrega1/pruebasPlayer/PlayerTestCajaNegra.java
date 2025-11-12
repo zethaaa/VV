@@ -1,0 +1,127 @@
+package es.upm.iwt41.entrega1.pruebasPlayer;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import space_invaders.sprites.Player;
+import java.awt.TextField;
+import java.awt.event.KeyEvent;
+
+import java.lang.reflect.InvocationTargetException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+public class PlayerTestCajaNegra {
+    Player player;
+
+    @BeforeEach
+    void setUp() {
+        this.player = new Player();
+    }
+
+    @Test
+    void keyReleasedRight() {
+        KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
+        player.keyReleased(keyEvent);
+        assertEquals(0, player.getDx());
+    }
+
+    @Test
+    void keyReleasedLeft() {
+        KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
+        player.keyReleased(keyEvent);
+        assertEquals(0, player.getDx());
+    }
+
+    @Test
+    void keyReleasedUp() {
+        KeyEvent keyEvent = new KeyEvent(new TextField(), KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED);
+        int dx_anterior = player.getDx();
+        player.keyReleased(keyEvent);
+        assertEquals(dx_anterior, player.getDx());
+    }
+
+
+    @Test
+    public void keyPressedRight() {
+        // Creación del evento que simula pulsar la flecha derecha
+        KeyEvent evento = new KeyEvent(
+                new TextField(),              // componente origen del evento
+                KeyEvent.KEY_PRESSED,         // tipo
+                System.currentTimeMillis(),   // timestamp
+                0,                            // modificadores
+                KeyEvent.VK_RIGHT,            // código de la tecla
+                KeyEvent.CHAR_UNDEFINED
+        );
+
+        // Afirmación
+        player.keyPressed(evento);
+        assertEquals(2, player.getDx());
+    }
+
+    @Test
+    void KeyPressedLeft() {
+        // Creación del evento que simula pulsar la flecha izquierda
+        KeyEvent evento = new KeyEvent(
+                new TextField(),              // componente origen del evento
+                KeyEvent.KEY_PRESSED,         // tipo
+                System.currentTimeMillis(),   // timestamp
+                0,                            // modificadores
+                KeyEvent.VK_LEFT,            // código de la tecla
+                KeyEvent.CHAR_UNDEFINED
+        );
+
+        // Afirmación
+        player.keyPressed(evento);
+        assertEquals(-2, player.getDx());
+    }
+
+    @Test
+    void keyPressedUp() {
+        KeyEvent // Creación del evento que simula pulsar la flecha izquierda
+                evento = new KeyEvent(
+                new TextField(),              // componente origen del evento
+                KeyEvent.KEY_PRESSED,         // tipo
+                System.currentTimeMillis(),   // timestamp
+                0,                            // modificadores
+                KeyEvent.VK_UP,            // código de la tecla
+                KeyEvent.CHAR_UNDEFINED
+        );
+
+        // Afirmación
+        player.keyPressed(evento);
+        assertEquals(0, player.getDx());
+    }
+
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvFileSource(resources= "/pruebasActPlayer.csv",
+            numLinesToSkip= 1,
+            lineSeparator = "\n",
+            delimiterString = ",")
+    void actPlayer(int x, int dx, int salida) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        player.setX(x);
+
+
+        if (dx == 2) {
+            KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
+            player.keyPressed(evento);
+
+        } else if (dx == -2) {
+            KeyEvent evento = new KeyEvent(new TextField(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
+            player.keyPressed(evento);
+        }
+
+        player.act();
+        assertEquals(salida, player.getX());
+    }
+
+    @Test
+    void initPlayer(){
+        Player p = new Player();
+        assertEquals(179, p.getX());
+        assertEquals(280, p.getY());
+    }
+
+}
+
