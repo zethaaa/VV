@@ -1,0 +1,581 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > BoardTestCajaNegra</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">es.upm.iwt41.entrega1.pruebasBoard</a>
+</div>
+
+<h1>Coverage Summary for Class: BoardTestCajaNegra (es.upm.iwt41.entrega1.pruebasBoard)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BoardTestCajaNegra</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/32)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/230)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package es.upm.iwt41.entrega1.pruebasBoard;
+&nbsp;import main.Board;
+&nbsp;import main.Commons;
+&nbsp;import org.junit.jupiter.api.BeforeEach;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;import space_invaders.sprites.Alien;
+&nbsp;import space_invaders.sprites.Player;
+&nbsp;import space_invaders.sprites.Shot;
+&nbsp;import space_invaders.sprites.Sprite;
+&nbsp;
+&nbsp;import java.lang.reflect.Method;
+&nbsp;import java.lang.reflect.Field;
+&nbsp;
+&nbsp;import java.lang.reflect.InvocationTargetException;
+&nbsp;import java.util.Iterator;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;public class BoardTestCajaNegra {</b>
+&nbsp;
+&nbsp;    private Alien alien;
+&nbsp;    private List&lt;Alien&gt; aliens;
+&nbsp;    private Board board;
+&nbsp;    private Player player;
+&nbsp;    private Method metodo;
+&nbsp;
+&nbsp;
+&nbsp;    @BeforeEach
+&nbsp;    void setUp() {
+&nbsp;        try {
+<b class="nc">&nbsp;            board = new Board();</b>
+&nbsp;
+<b class="nc">&nbsp;            Field aliensField = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="nc">&nbsp;            aliensField.setAccessible(true);</b>
+<b class="nc">&nbsp;            aliens = (List&lt;Alien&gt;) aliensField.get(board);</b>
+&nbsp;
+<b class="nc">&nbsp;            Field playerField = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="nc">&nbsp;            playerField.setAccessible(true);</b>
+<b class="nc">&nbsp;            player = (Player) playerField.get(board);</b>
+&nbsp;
+<b class="nc">&nbsp;            metodo = Board.class.getDeclaredMethod(&quot;update_bomb&quot;);</b>
+<b class="nc">&nbsp;            metodo.setAccessible(true);</b>
+&nbsp;
+&nbsp;        } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException e) {
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvFileSource(resources = &quot;/pruebasupdateshotcorrecto.csv&quot;,
+&nbsp;            numLinesToSkip = 1,
+&nbsp;            lineSeparator = &quot;\n&quot;,
+&nbsp;            delimiterString = &quot;,&quot;)
+&nbsp;    void updateShot(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+<b class="nc">&nbsp;        Shot newShot = new Shot(x, y);</b>
+<b class="nc">&nbsp;        board.setShot(newShot);</b>
+<b class="nc">&nbsp;        int previous_deaths = board.getDeaths();</b>
+<b class="nc">&nbsp;        board.update_shots();</b>
+&nbsp;
+<b class="nc">&nbsp;        assertEquals(esperadoY, board.getShot().getY());</b>
+<b class="nc">&nbsp;        assertEquals(previous_deaths, board.getDeaths());</b>
+<b class="nc">&nbsp;        assertEquals(esperadoX, board.getShot().getX());</b>
+<b class="nc">&nbsp;        assertFalse(board.getAliens().get(14).isDying());</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvFileSource(resources = &quot;/pruebasUpdateShotIncorrecto.csv&quot;,
+&nbsp;            numLinesToSkip = 1,
+&nbsp;            lineSeparator = &quot;\n&quot;,
+&nbsp;            delimiterString = &quot;,&quot;)
+&nbsp;    void updateShotColision(int x, int y, int esperadoY, int esperadoX) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+<b class="nc">&nbsp;        Shot newShot = new Shot(x, y);</b>
+<b class="nc">&nbsp;        board.setShot(newShot);</b>
+&nbsp;
+<b class="nc">&nbsp;        int previous_deaths = board.getDeaths();</b>
+<b class="nc">&nbsp;        board.update_shots();</b>
+&nbsp;
+<b class="nc">&nbsp;        assertEquals(esperadoY, board.getShot().getY());</b>
+<b class="nc">&nbsp;        assertEquals(esperadoX, board.getShot().getX());</b>
+<b class="nc">&nbsp;        assertEquals(previous_deaths + 1, board.getDeaths());</b>
+<b class="nc">&nbsp;        assertTrue(board.getAliens().get(14).isDying());</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvSource(value = {
+&nbsp;            &quot;194, 5, 0, 200&quot;,
+&nbsp;            &quot;194, 6, 1, 200&quot;})
+&nbsp;    void updateShotLimitesTablero(int x, int y, int yEsperado, int xEsperado) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+<b class="nc">&nbsp;        Shot newShot = new Shot(x, y);</b>
+<b class="nc">&nbsp;        board.setShot(newShot);</b>
+&nbsp;
+<b class="nc">&nbsp;        board.update_shots();</b>
+&nbsp;
+<b class="nc">&nbsp;        assertEquals(yEsperado, board.getShot().getY());</b>
+<b class="nc">&nbsp;        assertEquals(xEsperado, board.getShot().getX());</b>
+<b class="nc">&nbsp;        assertTrue(board.getShot().isVisible());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void updateShotFueraLimites() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+<b class="nc">&nbsp;        Shot newShot = new Shot(194, 4);</b>
+<b class="nc">&nbsp;        board.setShot(newShot);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        board.update_shots();</b>
+&nbsp;
+<b class="nc">&nbsp;        assertEquals(3, board.getShot().getY());</b>
+<b class="nc">&nbsp;        assertEquals(200, board.getShot().getX());</b>
+<b class="nc">&nbsp;        assertFalse(board.getShot().isVisible());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void gameInit() {
+<b class="nc">&nbsp;        assertNotEquals(null, this.board.getPlayer());</b>
+<b class="nc">&nbsp;        assertNotEquals(null, this.board.getShot());</b>
+<b class="nc">&nbsp;        assertEquals(24, this.board.getAliens().size());</b>
+<b class="nc">&nbsp;        assertEquals(18, this.board.getAliens().get(1).getX() - this.board.getAliens().get(0).getX());</b>
+<b class="nc">&nbsp;        assertEquals(18, this.board.getAliens().get(6).getY() - this.board.getAliens().get(0).getY());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvSource(value = {
+&nbsp;            &quot;1, Game Over&quot;,
+&nbsp;            &quot;24, Game won!&quot;})
+&nbsp;    void pruebaUpdate(int deaths, String salida) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+<b class="nc">&nbsp;        board.setDeaths(deaths);</b>
+&nbsp;
+<b class="nc">&nbsp;        int anterior = board.getAliens().get(0).getX();</b>
+<b class="nc">&nbsp;        board.update();</b>
+&nbsp;
+<b class="nc">&nbsp;        assertEquals(salida, board.getMessage());</b>
+&nbsp;
+<b class="nc">&nbsp;        if (deaths == 1) {</b>
+<b class="nc">&nbsp;            assertTrue(board.isInGame());</b>
+<b class="nc">&nbsp;            assertNotEquals(anterior, board.getAliens().get(0).getX());</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            assertFalse(board.isInGame());</b>
+<b class="nc">&nbsp;            assertEquals(anterior, board.getAliens().get(0).getX());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void probarUpdateAliens_TocarBordeDerecho() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;
+<b class="nc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="nc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="nc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="nc">&nbsp;        Player test = new Player();</b>
+<b class="nc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="nc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="nc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="nc">&nbsp;        listaAliens.clear();</b>
+&nbsp;
+<b class="nc">&nbsp;        int posXRight = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;</b>
+<b class="nc">&nbsp;        Alien alienBordeDer = new Alien(posXRight, 100);</b>
+<b class="nc">&nbsp;        listaAliens.add(alienBordeDer);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="nc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="nc">&nbsp;        campoDirection.set(board, 1);</b>
+&nbsp;
+<b class="nc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="nc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
+<b class="nc">&nbsp;        campoYAlien.setAccessible(true);</b>
+<b class="nc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienBordeDer);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
+<b class="nc">&nbsp;        campoXAlien.setAccessible(true);</b>
+<b class="nc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienBordeDer);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: -1）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;pos y: &quot; + nuevaY + &quot;（esperado: &quot; + (100 + Commons.GO_DOWN) + &quot;）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;pos x: &quot; + nuevaX + &quot;（esperado: &quot; + (posXRight - 1) + &quot;）&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        assertTrue(-1 == nuevaDirection);</b>
+<b class="nc">&nbsp;        assertEquals(100 + Commons.GO_DOWN, nuevaY);</b>
+<b class="nc">&nbsp;        assertEquals(posXRight - 1, nuevaX); //se prueba? es responsabilidad de act</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void probarUpdateAliens_TocarBordeIzquierdo() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;        // para el metodo privado de update_aliens
+<b class="nc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="nc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+&nbsp;        // para no dar error de player nulo
+<b class="nc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="nc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="nc">&nbsp;        Player test = new Player();</b>
+<b class="nc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+&nbsp;        // lista de aliens
+<b class="nc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="nc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="nc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="nc">&nbsp;        listaAliens.clear();</b>
+<b class="nc">&nbsp;        Alien alienBordeIzq = new Alien(Commons.BORDER_LEFT, 100);</b>
+<b class="nc">&nbsp;        listaAliens.add(alienBordeIzq);</b>
+&nbsp;
+&nbsp;        // inicializar moviendose a izq y toca borde（-1）
+<b class="nc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="nc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="nc">&nbsp;        campoDirection.set(board, -1);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="nc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
+<b class="nc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
+<b class="nc">&nbsp;        campoYAlien.setAccessible(true);</b>
+<b class="nc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienBordeIzq);</b>
+<b class="nc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
+<b class="nc">&nbsp;        campoXAlien.setAccessible(true);</b>
+<b class="nc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienBordeIzq);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: 1）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;y: &quot; + nuevaY + &quot;（esperado: &quot; + (100 + Commons.GO_DOWN) + &quot;）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;x: &quot; + nuevaX + &quot;（esperado: &quot; + (Commons.BORDER_LEFT + 1) + &quot;）&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        assertTrue(nuevaDirection == 1 &amp;&amp; nuevaY == 100 + Commons.GO_DOWN);</b>
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvSource(value = {
+&nbsp;            &quot;-1, 100, 303&quot;,
+&nbsp;            &quot;-1, 100, 302&quot;}
+&nbsp;            )
+&nbsp;
+&nbsp;    void probarUpdateAliens_TocarBordeInferior(int direccion, int x, int y) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;
+<b class="nc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="nc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="nc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="nc">&nbsp;        Player test = new Player();</b>
+<b class="nc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="nc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="nc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="nc">&nbsp;        listaAliens.clear();</b>
+&nbsp;
+<b class="nc">&nbsp;        Alien alienBordeInf = new Alien(x, y);</b>
+<b class="nc">&nbsp;        listaAliens.add(alienBordeInf);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoInGame = Board.class.getDeclaredField(&quot;inGame&quot;);</b>
+<b class="nc">&nbsp;        campoInGame.setAccessible(true);</b>
+<b class="nc">&nbsp;        campoInGame.set(board, true);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="nc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="nc">&nbsp;        campoDirection.set(board, direccion);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="nc">&nbsp;        boolean juegoTerminado = (boolean) campoInGame.get(board);</b>
+<b class="nc">&nbsp;        Field campoMessage = Board.class.getDeclaredField(&quot;message&quot;);</b>
+<b class="nc">&nbsp;        campoMessage.setAccessible(true);</b>
+<b class="nc">&nbsp;        String mensaje = (String) campoMessage.get(board);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Estado: &quot; + juegoTerminado + &quot;（esperado: false）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Mensaje: &quot; + mensaje + &quot;（esperado: Invasion!）&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(y == 303) assertTrue(!juegoTerminado &amp;&amp; &quot;Invasion!&quot;.equals(mensaje));</b>
+<b class="nc">&nbsp;        if(y == 302) assertTrue(juegoTerminado &amp;&amp; !&quot;Invasion!&quot;.equals(mensaje));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvSource(value = {
+&nbsp;            &quot;1, 100, 150, 1, 150&quot;,
+&nbsp;            &quot;-1, 6, 100, -1, 100&quot;,
+&nbsp;            &quot;1, 327, 100, 1, 100&quot;})
+&nbsp;    void probarUpdateAliens_NoTocarBordes(int direccion, int x, int y, int direccionEsperada, int yEsperada) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;
+<b class="nc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="nc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="nc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="nc">&nbsp;        Player test = new Player();</b>
+<b class="nc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="nc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="nc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="nc">&nbsp;        listaAliens.clear();</b>
+<b class="nc">&nbsp;        Alien alienNoBorde = new Alien(x, y);</b>
+<b class="nc">&nbsp;        listaAliens.add(alienNoBorde);</b>
+&nbsp;
+<b class="nc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="nc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="nc">&nbsp;        campoDirection.set(board, direccion);</b>
+&nbsp;
+<b class="nc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="nc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
+<b class="nc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
+<b class="nc">&nbsp;        campoYAlien.setAccessible(true);</b>
+<b class="nc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienNoBorde);</b>
+<b class="nc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
+<b class="nc">&nbsp;        campoXAlien.setAccessible(true);</b>
+<b class="nc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienNoBorde);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: 1）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;y: &quot; + nuevaY + &quot;（esperado: 150）&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;x: &quot; + nuevaX + &quot;（esperado: 101）&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        assertTrue(direccionEsperada == nuevaDirection &amp;&amp; yEsperada == nuevaY);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP1() {
+<b class="nc">&nbsp;        alien = new Alien(100, 100);</b>
+<b class="nc">&nbsp;        alien.getBomb().setDestroyed(true);</b>
+<b class="nc">&nbsp;        alien.die();</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            metodo.invoke(board);</b>
+&nbsp;        } catch (IllegalAccessException | InvocationTargetException e) {
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        boolean resultado = alien.getBomb().isDestroyed() == true;</b>
+<b class="nc">&nbsp;        assertTrue(resultado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP2() {
+<b class="nc">&nbsp;        alien = new Alien(100, 100);</b>
+<b class="nc">&nbsp;        Alien.Bomb bomba = this.alien.getBomb();</b>
+<b class="nc">&nbsp;        bomba.setDestroyed(false);</b>
+<b class="nc">&nbsp;        bomba.setY(110);</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            metodo.invoke(board);</b>
+&nbsp;        } catch (IllegalAccessException | InvocationTargetException e) {
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        assertFalse(bomba.isDestroyed());</b>
+<b class="nc">&nbsp;        assertEquals(111, bomba.getY());</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(player.isDying());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP3() {
+<b class="nc">&nbsp;        alien = new Alien(100, 100);</b>
+<b class="nc">&nbsp;        alien.getBomb().setDestroyed(true);</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+&nbsp;
+<b class="nc">&nbsp;        board.update_bomb_randomCustom(5);</b>
+&nbsp;
+<b class="nc">&nbsp;        boolean resultado = alien.getBomb().isDestroyed() == true;</b>
+<b class="nc">&nbsp;        assertTrue(resultado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP4() {
+<b class="nc">&nbsp;        alien = new Alien(100, 100);</b>
+<b class="nc">&nbsp;        Alien.Bomb bomba = alien.getBomb();</b>
+<b class="nc">&nbsp;        bomba.setDestroyed(true);</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+&nbsp;
+<b class="nc">&nbsp;        board.update_bomb_randomCustom(7);</b>
+&nbsp;
+<b class="nc">&nbsp;        boolean resultado = bomba.isDestroyed() == false;</b>
+<b class="nc">&nbsp;        assertTrue(resultado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP5 (){
+<b class="nc">&nbsp;        alien = new Alien(100,100);</b>
+<b class="nc">&nbsp;        Alien.Bomb bomba = alien.getBomb();</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+<b class="nc">&nbsp;        bomba.setDestroyed(false);</b>
+<b class="nc">&nbsp;        bomba.setY(285);</b>
+<b class="nc">&nbsp;        bomba.setX(100);</b>
+&nbsp;
+&nbsp;        try{
+<b class="nc">&nbsp;            metodo.invoke(board);</b>
+&nbsp;        } catch (IllegalAccessException | InvocationTargetException e){
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        boolean resultado = bomba.isDestroyed() == true;</b>
+<b class="nc">&nbsp;        assertTrue(resultado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP6(){
+<b class="nc">&nbsp;        alien = new Alien(100,100);</b>
+<b class="nc">&nbsp;        Alien.Bomb bomba = alien.getBomb();</b>
+<b class="nc">&nbsp;        bomba.setDestroyed(false);</b>
+<b class="nc">&nbsp;        bomba.setY(280);</b>
+<b class="nc">&nbsp;        bomba.setX(40);</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+<b class="nc">&nbsp;        player.setX(35);</b>
+<b class="nc">&nbsp;        player.setY(280);</b>
+&nbsp;
+&nbsp;        try{
+<b class="nc">&nbsp;            metodo.invoke(board);</b>
+&nbsp;        } catch (IllegalAccessException | InvocationTargetException e){
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        boolean resultado = bomba.isDestroyed() == true &amp;&amp; player.isDying() == true;</b>
+&nbsp;
+<b class="nc">&nbsp;        assertTrue(resultado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void update_bombCP7(){
+<b class="nc">&nbsp;        alien = new Alien(100,100);</b>
+<b class="nc">&nbsp;        Alien.Bomb bomba = alien.getBomb();</b>
+<b class="nc">&nbsp;        bomba.setDestroyed(false);</b>
+<b class="nc">&nbsp;        bomba.setY(280);</b>
+<b class="nc">&nbsp;        bomba.setX(40);</b>
+<b class="nc">&nbsp;        aliens.add(alien);</b>
+&nbsp;
+<b class="nc">&nbsp;        player.setX(35);</b>
+<b class="nc">&nbsp;        player.setY(280);</b>
+<b class="nc">&nbsp;        player.die();</b>
+&nbsp;
+&nbsp;        try{
+<b class="nc">&nbsp;            metodo.invoke(board);</b>
+&nbsp;        } catch (IllegalAccessException | InvocationTargetException e){
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        boolean resultado = bomba.isDestroyed() == false &amp;&amp; player.isDying() == false;</b>
+<b class="nc">&nbsp;        assertTrue(resultado);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-11-12 19:58</div>
+</div>
+</body>
+</html>
