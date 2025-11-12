@@ -77,4 +77,6 @@ public class PlayerTestCajaBlanca {
         player.keyReleased(keyEvent);
         assertEquals(dx_anterior, player.getDx());
     }
+
+
 }
