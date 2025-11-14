@@ -36,7 +36,7 @@ public class AlienTestCajaBlanca {
         boolean resultado = alien.getX() == valorX  && alien.getY() == Commons.BOARD_HEIGHT;
         assertTrue(resultado);
     }
-    ;
+    
     @Test
     void probarinitAlienCP4(){
         int valorX = 100;
