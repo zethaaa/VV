@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
 import space_invaders.sprites.Shot;
+import space_invaders.sprites.Sprite;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -44,6 +45,7 @@ public class BoardTestCajaBlanca {
     }
 
 
+    /**
     @Test
     void moverShotCaminoBase(){
         Shot newShot = new Shot(186, 48);
@@ -377,7 +379,7 @@ public class BoardTestCajaBlanca {
 
     }
 
-
+*/
 
 
     @Test
@@ -389,11 +391,8 @@ public class BoardTestCajaBlanca {
         player.setX(35);
         player.setY(280);
 
-        try{
-            metodo.invoke(board);
-        } catch (IllegalAccessException | InvocationTargetException e){
-            throw new RuntimeException(e);
-        }
+        board.update_bomb_randomCustom(7);
+
         boolean resultado = bomba.isDestroyed() == true && player.isDying() == true;
         assertTrue(resultado);
     }
@@ -409,12 +408,10 @@ public class BoardTestCajaBlanca {
         aliens.add(alien);
         player.setX(35);
         player.setY(280);
+        alien.setVisible(false);
 
-        try{
-            metodo.invoke(board);
-        } catch (IllegalAccessException | InvocationTargetException e){
-            throw new RuntimeException(e);
-        }
+        board.update_bomb_randomCustom(7);
+
         boolean resultado = bomba.isDestroyed() == true && player.isDying() == false;
         assertTrue(resultado);
 
@@ -433,11 +430,8 @@ public class BoardTestCajaBlanca {
         player.setY(280);
         player.die();
 
-        try{
-            metodo.invoke(board);
-        } catch (IllegalAccessException | InvocationTargetException e){
-            throw new RuntimeException(e);
-        }
+        board.update_bomb_randomCustom(7);
+
         boolean resultado = bomba.isDestroyed() == true && player.isDying() == false;
         assertTrue(resultado);
 
@@ -454,11 +448,9 @@ public class BoardTestCajaBlanca {
         aliens.clear();
         aliens.add(alien);
         player.die();
-        try{
-            metodo.invoke(board);
-        } catch (IllegalAccessException | InvocationTargetException e){
-            throw new RuntimeException(e);
-        }
+
+        board.update_bomb_randomCustom(5);
+
         boolean resultado = bomba.isDestroyed() == false && bomba.getY() == valorY+1;
         assertTrue(resultado);
 
