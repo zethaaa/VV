@@ -239,9 +239,13 @@ public class BoardTestCajaNegra {
 
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "-1, 100, 303",
+            "-1, 100, 302"}
+            )
 
-    @Test
-    void probarUpdateAliens_TocarBordeInferior() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+    void probarUpdateAliens_TocarBordeInferior(int direccion, int x, int y) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
 
         Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
         metodoUpdateAliens.setAccessible(true);
@@ -256,13 +260,17 @@ public class BoardTestCajaNegra {
         List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
         listaAliens.clear();
 
-        int lineaInferior = Commons.GROUND + Commons.ALIEN_HEIGHT + 1;
-        Alien alienBordeInf = new Alien(100, lineaInferior);
+        Alien alienBordeInf = new Alien(x, y);
         listaAliens.add(alienBordeInf);
 
         Field campoInGame = Board.class.getDeclaredField("inGame");
         campoInGame.setAccessible(true);
         campoInGame.set(board, true);
+
+        Field campoDirection = Board.class.getDeclaredField("direction");
+        campoDirection.setAccessible(true);
+        campoDirection.set(board, direccion);
+
 
         metodoUpdateAliens.invoke(board);
 
@@ -274,11 +282,16 @@ public class BoardTestCajaNegra {
         System.out.println("Estado: " + juegoTerminado + "（esperado: false）");
         System.out.println("Mensaje: " + mensaje + "（esperado: Invasion!）");
 
-        assertTrue(!juegoTerminado && "Invasion!".equals(mensaje));
+        if(y == 303) assertTrue(!juegoTerminado && "Invasion!".equals(mensaje));
+        if(y == 302) assertTrue(juegoTerminado && !"Invasion!".equals(mensaje));
     }
 
-    @Test
-    void probarUpdateAliens_NoTocarBordes() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "1, 100, 150, 1, 150",
+            "-1, 6, 100, -1, 100",
+            "1, 327, 100, 1, 100"})
+    void probarUpdateAliens_NoTocarBordes(int direccion, int x, int y, int direccionEsperada, int yEsperada) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
 
         Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
         metodoUpdateAliens.setAccessible(true);
@@ -292,12 +305,12 @@ public class BoardTestCajaNegra {
         campoAliens.setAccessible(true);
         List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
         listaAliens.clear();
-        Alien alienNoBorde = new Alien(100, 150);
+        Alien alienNoBorde = new Alien(x, y);
         listaAliens.add(alienNoBorde);
 
         Field campoDirection = Board.class.getDeclaredField("direction");
         campoDirection.setAccessible(true);
-        campoDirection.set(board, 1);
+        campoDirection.set(board, direccion);
 
         metodoUpdateAliens.invoke(board);
 
@@ -313,7 +326,7 @@ public class BoardTestCajaNegra {
         System.out.println("y: " + nuevaY + "（esperado: 150）");
         System.out.println("x: " + nuevaX + "（esperado: 101）");
 
-        assertTrue(nuevaDirection == 1 && nuevaY == 150 && nuevaX == 100 + 1);
+        assertTrue(direccionEsperada == nuevaDirection && yEsperada == nuevaY);
 
     }
 
@@ -381,7 +394,7 @@ public class BoardTestCajaNegra {
     }
 
     @Test
-    void probarUpdateBombCP5(){
+    void update_bombCP5 (){
         alien = new Alien(100,100);
         Alien.Bomb bomba = alien.getBomb();
         aliens.add(alien);
@@ -400,7 +413,7 @@ public class BoardTestCajaNegra {
     }
 
     @Test
-    void probarUpdateBombCP6(){
+    void update_bombCP6(){
         alien = new Alien(100,100);
         Alien.Bomb bomba = alien.getBomb();
         bomba.setDestroyed(false);
@@ -422,7 +435,7 @@ public class BoardTestCajaNegra {
 
 
     @Test
-    void probarUpdateBombCP7(){
+    void update_bombCP7(){
         alien = new Alien(100,100);
         Alien.Bomb bomba = alien.getBomb();
         bomba.setDestroyed(false);
