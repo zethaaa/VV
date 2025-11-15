@@ -89,7 +89,7 @@ public class PlayerTestCajaNegra {
         );
 
         // Afirmación
-        int dx_anterior = player.getDx()
+        int dx_anterior = player.getDx();
         player.keyPressed(evento);
         assertEquals(dx_anterior, player.getDx());
     }
