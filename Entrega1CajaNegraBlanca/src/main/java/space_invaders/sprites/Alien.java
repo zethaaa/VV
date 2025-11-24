@@ -128,6 +128,10 @@ public class Alien extends Sprite {
          * Si el valor X o Y indicados superan el margen de la pantalla, se les asignará el valor máximo permitido.
          * Si se introduce algún valor negativo, será reemplazado por 0.
          * */
+
+        /*Se dividió en dos sentencias if las comprobaciones de X e Y para cambiar su valor de forma independiente.
+        * Además, se incluyó la condición de que el valor de los input sea menor a 0 y su correspondiente ajuste
+        * Por último, se*/
         public void initBomb(int x, int y) {
 
             setDestroyed(true);
