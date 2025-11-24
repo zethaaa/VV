@@ -42,5 +42,28 @@ public class AlienTestCajaNegra {
         assertEquals(esperado_y, newAlien.getY());
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "150, 150, 150, 150",
+            "359, 150, 358, 150",
+            "150, 351, 150, 350",
+            "-1, 150, 0, 150",
+            "150, -1, 150, 0"
+    }
+    )
+    void initBomb(int x, int y, int xEsperado, int yEsperado) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+
+        Alien alien = new Alien(150, 150);
+
+        Alien.Bomb bomb = alien.getBomb();
+
+        bomb.initBomb(x,y);
+
+        assertEquals(xEsperado, bomb.getX());
+        assertEquals(yEsperado, bomb.getY());
+
+
+    }
+
 
 }

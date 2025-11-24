@@ -334,6 +334,7 @@ public class Board extends JPanel {
      */
 
 
+    /*Se ha eliminado la línea this.shot.setX(y);*/
     public void update_shots() {
         if (this.shot.isVisible()) {
 
@@ -367,7 +368,6 @@ public class Board extends JPanel {
                 this.shot.die();
             } else {
                 this.shot.setY(y);
-                this.shot.setX(y);
             }
         }
     }

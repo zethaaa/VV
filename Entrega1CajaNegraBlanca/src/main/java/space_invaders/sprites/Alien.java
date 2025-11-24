@@ -80,9 +80,11 @@ public class Alien extends Sprite {
      * <dl class="notes"><dt>Postcondición:</dt> <dd>La posición horizontal del alien se actualiza 
      * según la dirección especificada.</dd></dl>
      */
+
+    /*Se cambió el signo - por un signo + */
     public void act(int direction) {
 
-        this.x -= direction;
+        this.x += direction;
     }
 
     /**
@@ -126,18 +128,17 @@ public class Alien extends Sprite {
          * Si el valor X o Y indicados superan el margen de la pantalla, se les asignará el valor máximo permitido.
          * Si se introduce algún valor negativo, será reemplazado por 0.
          * */
-        private void initBomb(int x, int y) {
+        public void initBomb(int x, int y) {
 
             setDestroyed(true);
 
-            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {
-                this.x += x;
-                this.y += y;
-            } else
-            {
-                this.x = Commons.BOARD_WIDTH;
-                this.y = Commons.BOARD_HEIGHT;
-            }
+            if (x<= Commons.BOARD_WIDTH && x>0) this.x = x;
+            else if(x < 0) this.x = 0;
+            else this.x = Commons.BOARD_WIDTH;
+
+            if(y<= Commons.BOARD_HEIGHT && y>0) this.y = y;
+            else if(y < 0) this.y=0;
+            else this.y = Commons.BOARD_HEIGHT;
 
             var bombImg = "src/main/resources/images/bomb.png";
             var ii = new ImageIcon(bombImg);
