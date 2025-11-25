@@ -334,7 +334,8 @@ public class Board extends JPanel {
      */
 
 
-    /*Se ha eliminado la línea this.shot.setX(y);*/
+    /*Se ha eliminado la línea this.shot.setX(y) y de la condición 'this.shot.isVisible()' en el if anidado
+    debido a la redundancia que suponía con el primer if.*/
     public void update_shots() {
         if (this.shot.isVisible()) {
 
@@ -346,7 +347,7 @@ public class Board extends JPanel {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
 
-                if (alien.isVisible() && this.shot.isVisible()) {
+                if (alien.isVisible()) {
                     if (shotX >= (alienX)
                             && shotX <= (alienX + Commons.ALIEN_WIDTH)
                             && shotY >= (alienY)

@@ -45,7 +45,7 @@ public class BoardTestCajaBlanca {
     }
 
 
-    /**
+
     @Test
     void moverShotCaminoBase(){
         Shot newShot = new Shot(186, 48);
@@ -379,7 +379,7 @@ public class BoardTestCajaBlanca {
 
     }
 
-*/
+
 
 
     @Test
