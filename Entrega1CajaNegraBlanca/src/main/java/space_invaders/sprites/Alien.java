@@ -131,7 +131,7 @@ public class Alien extends Sprite {
 
         /*Se dividió en dos sentencias if las comprobaciones de X e Y para cambiar su valor de forma independiente.
         * Además, se incluyó la condición de que el valor de los input sea menor a 0 y su correspondiente ajuste
-        * Por último, se*/
+        * Por último, se ha modificado la asignación del valor X e Y, pues se realizaba una suma con el valor anterior.*/
         public void initBomb(int x, int y) {
 
             setDestroyed(true);
