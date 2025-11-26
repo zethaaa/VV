@@ -58,6 +58,9 @@ public class Player extends Sprite {
      */
 
 
+    /*Se ha eliminado el atributo 'width' de la comprobación del segundo if, pues el valor 2 ya aporta un margen suficiente.
+    * También se ha corregido la reasignación de la posición del jugador al superar el límite derecho: Commons.BOARD_WIDTH + 2 a Commons.BOARD_WIDTH - 2.
+    * Anteriormente se posicionaba al jugador en una posición fuera de los límites.*/
     public void act() {
 
         x += dx;

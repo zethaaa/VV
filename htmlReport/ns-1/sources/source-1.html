@@ -59,23 +59,23 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (22/22)
+    (20/20)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    53,6%
+    58,8%
   </span>
   <span class="absValue">
-    (15/28)
+    (20/34)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    98,5%
+    99,1%
   </span>
   <span class="absValue">
-    (255/259)
+    (227/229)
   </span>
 </td>
 </tr>
@@ -248,227 +248,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;
-&nbsp;    @Test
-&nbsp;    void update_aliensPrimerCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-&nbsp;        // para el metodo privado de update_aliens
-<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
-<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
-&nbsp;
-&nbsp;        // para no dar error de player nulo
-<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
-<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
-<b class="fc">&nbsp;        Player test = new Player();</b>
-<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
-&nbsp;
-&nbsp;        // lista de aliens
-<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
-<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
-<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
-<b class="fc">&nbsp;        listaAliens.clear();</b>
-<b class="fc">&nbsp;        Alien alienBordeIzq = new Alien(Commons.BORDER_LEFT, 100);</b>
-<b class="fc">&nbsp;        listaAliens.add(alienBordeIzq);</b>
-&nbsp;
-&nbsp;        // inicializar moviendose a izq y toca borde（-1）
-<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
-<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoDirection.set(board, -1);</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
-&nbsp;
-<b class="fc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
-<b class="fc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
-<b class="fc">&nbsp;        campoYAlien.setAccessible(true);</b>
-<b class="fc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienBordeIzq);</b>
-<b class="fc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
-<b class="fc">&nbsp;        campoXAlien.setAccessible(true);</b>
-<b class="fc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienBordeIzq);</b>
-&nbsp;
-<b class="fc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: 1）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;y: &quot; + nuevaY + &quot;（esperado: &quot; + (100 + Commons.GO_DOWN) + &quot;）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;x: &quot; + nuevaX + &quot;（esperado: &quot; + (Commons.BORDER_LEFT + 1) + &quot;）&quot;);</b>
-&nbsp;
-<b class="pc">&nbsp;        assertTrue(nuevaDirection == 1 &amp;&amp; nuevaY == 100 + Commons.GO_DOWN);</b>
-&nbsp;
-&nbsp;
-&nbsp;    }
-&nbsp;    @Test
-&nbsp;    void update_aliensCuartoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-&nbsp;
-<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
-<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
-<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
-<b class="fc">&nbsp;        Player test = new Player();</b>
-<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
-<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
-<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
-<b class="fc">&nbsp;        listaAliens.clear();</b>
-&nbsp;
-<b class="fc">&nbsp;        int posXRight = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;</b>
-<b class="fc">&nbsp;        Alien alienBordeDer = new Alien(posXRight, 100);</b>
-<b class="fc">&nbsp;        listaAliens.add(alienBordeDer);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
-<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoDirection.set(board, 1);</b>
-&nbsp;
-<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
-&nbsp;
-<b class="fc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
-<b class="fc">&nbsp;        campoYAlien.setAccessible(true);</b>
-<b class="fc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienBordeDer);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
-<b class="fc">&nbsp;        campoXAlien.setAccessible(true);</b>
-<b class="fc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienBordeDer);</b>
-&nbsp;
-<b class="fc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: -1）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;pos y: &quot; + nuevaY + &quot;（esperado: &quot; + (100 + Commons.GO_DOWN) + &quot;）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;pos x: &quot; + nuevaX + &quot;（esperado: &quot; + (posXRight - 1) + &quot;）&quot;);</b>
-&nbsp;
-<b class="pc">&nbsp;        assertTrue(-1 == nuevaDirection);</b>
-<b class="nc">&nbsp;        assertEquals(100 + Commons.GO_DOWN, nuevaY);</b>
-<b class="nc">&nbsp;        assertEquals(posXRight - 1, nuevaX); //se prueba? es responsabilidad de act</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @Test
-&nbsp;    void update_aliensTercerCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-&nbsp;
-<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
-<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
-<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
-<b class="fc">&nbsp;        Player test = new Player();</b>
-<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
-<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
-<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
-<b class="fc">&nbsp;        listaAliens.clear();</b>
-<b class="fc">&nbsp;        Alien alienNoBorde = new Alien(100, 150);</b>
-<b class="fc">&nbsp;        listaAliens.add(alienNoBorde);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
-<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoDirection.set(board, 1);</b>
-&nbsp;
-<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
-&nbsp;
-<b class="fc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
-<b class="fc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
-<b class="fc">&nbsp;        campoYAlien.setAccessible(true);</b>
-<b class="fc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienNoBorde);</b>
-<b class="fc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
-<b class="fc">&nbsp;        campoXAlien.setAccessible(true);</b>
-<b class="fc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienNoBorde);</b>
-&nbsp;
-<b class="fc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: 1）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;y: &quot; + nuevaY + &quot;（esperado: 150）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;x: &quot; + nuevaX + &quot;（esperado: 101）&quot;);</b>
-&nbsp;
-<b class="pc">&nbsp;        assertTrue(1 == nuevaDirection &amp;&amp; 150 == nuevaY);</b>
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;    @Test
-&nbsp;    void update_aliensSextoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-&nbsp;
-<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
-<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
-<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
-<b class="fc">&nbsp;        Player test = new Player();</b>
-<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
-<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
-<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
-<b class="fc">&nbsp;        listaAliens.clear();</b>
-&nbsp;
-<b class="fc">&nbsp;        Alien alienBordeInf = new Alien(100, 303);</b>
-<b class="fc">&nbsp;        listaAliens.add(alienBordeInf);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoInGame = Board.class.getDeclaredField(&quot;inGame&quot;);</b>
-<b class="fc">&nbsp;        campoInGame.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoInGame.set(board, true);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
-<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoDirection.set(board, -1);</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
-&nbsp;
-<b class="fc">&nbsp;        boolean juegoTerminado = (boolean) campoInGame.get(board);</b>
-<b class="fc">&nbsp;        Field campoMessage = Board.class.getDeclaredField(&quot;message&quot;);</b>
-<b class="fc">&nbsp;        campoMessage.setAccessible(true);</b>
-<b class="fc">&nbsp;        String mensaje = (String) campoMessage.get(board);</b>
-&nbsp;
-<b class="fc">&nbsp;        System.out.println(&quot;Estado: &quot; + juegoTerminado + &quot;（esperado: false）&quot;);</b>
-<b class="fc">&nbsp;        System.out.println(&quot;Mensaje: &quot; + mensaje + &quot;（esperado: Invasion!）&quot;);</b>
-<b class="pc">&nbsp;        assertTrue(!juegoTerminado &amp;&amp; &quot;Invasion!&quot;.equals(mensaje));</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @Test
-&nbsp;    void update_aliensSegundoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
-<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
-<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
-<b class="fc">&nbsp;        Player test = new Player();</b>
-<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
-<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
-<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
-<b class="fc">&nbsp;        listaAliens.clear();</b>
-<b class="fc">&nbsp;        Alien alienNoBorde = new Alien(100, 150);</b>
-<b class="fc">&nbsp;        listaAliens.add(alienNoBorde);</b>
-<b class="fc">&nbsp;        alienNoBorde.setVisible(false);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
-<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoDirection.set(board, 1);</b>
-&nbsp;
-<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;    @Test
-&nbsp;    void update_aliensQuintoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
-<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
-<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
-<b class="fc">&nbsp;        Player test = new Player();</b>
-<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
-<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
-<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
-<b class="fc">&nbsp;        listaAliens.clear();</b>
-&nbsp;
-<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
-<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
-<b class="fc">&nbsp;        campoDirection.set(board, 1);</b>
-&nbsp;
-<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;    @Test
@@ -570,6 +349,191 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;
+&nbsp;    @Test
+&nbsp;    void probarUpdateAliens_TocarBordeDerecho() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;
+<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="fc">&nbsp;        Player test = new Player();</b>
+<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="fc">&nbsp;        listaAliens.clear();</b>
+&nbsp;
+<b class="fc">&nbsp;        int posXRight = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;</b>
+<b class="fc">&nbsp;        Alien alienBordeDer = new Alien(posXRight, 100);</b>
+<b class="fc">&nbsp;        listaAliens.add(alienBordeDer);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="fc">&nbsp;        campoDirection.set(board, 1);</b>
+&nbsp;
+<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="fc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
+<b class="fc">&nbsp;        campoYAlien.setAccessible(true);</b>
+<b class="fc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienBordeDer);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
+<b class="fc">&nbsp;        campoXAlien.setAccessible(true);</b>
+<b class="fc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienBordeDer);</b>
+&nbsp;
+<b class="fc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: -1）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;pos y: &quot; + nuevaY + &quot;（esperado: &quot; + (100 + Commons.GO_DOWN) + &quot;）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;pos x: &quot; + nuevaX + &quot;（esperado: &quot; + (posXRight - 1) + &quot;）&quot;);</b>
+&nbsp;
+<b class="pc">&nbsp;        assertTrue(-1 == nuevaDirection);</b>
+<b class="fc">&nbsp;        assertEquals(100 + Commons.GO_DOWN, nuevaY);</b>
+<b class="fc">&nbsp;        assertEquals(posXRight - 1, nuevaX); //se prueba? es responsabilidad de act</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void probarUpdateAliens_TocarBordeIzquierdo() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;        // para el metodo privado de update_aliens
+<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+&nbsp;        // para no dar error de player nulo
+<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="fc">&nbsp;        Player test = new Player();</b>
+<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+&nbsp;        // lista de aliens
+<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="fc">&nbsp;        listaAliens.clear();</b>
+<b class="fc">&nbsp;        Alien alienBordeIzq = new Alien(Commons.BORDER_LEFT, 100);</b>
+<b class="fc">&nbsp;        listaAliens.add(alienBordeIzq);</b>
+&nbsp;
+&nbsp;        // inicializar moviendose a izq y toca borde（-1）
+<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="fc">&nbsp;        campoDirection.set(board, -1);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="fc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
+<b class="fc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
+<b class="fc">&nbsp;        campoYAlien.setAccessible(true);</b>
+<b class="fc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienBordeIzq);</b>
+<b class="fc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
+<b class="fc">&nbsp;        campoXAlien.setAccessible(true);</b>
+<b class="fc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienBordeIzq);</b>
+&nbsp;
+<b class="fc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: 1）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;y: &quot; + nuevaY + &quot;（esperado: &quot; + (100 + Commons.GO_DOWN) + &quot;）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;x: &quot; + nuevaX + &quot;（esperado: &quot; + (Commons.BORDER_LEFT + 1) + &quot;）&quot;);</b>
+&nbsp;
+<b class="pc">&nbsp;        assertTrue(nuevaDirection == 1 &amp;&amp; nuevaY == 100 + Commons.GO_DOWN);</b>
+&nbsp;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvSource(value = {
+&nbsp;            &quot;-1, 100, 303&quot;,
+&nbsp;            &quot;-1, 100, 302&quot;}
+&nbsp;    )
+&nbsp;
+&nbsp;    void probarUpdateAliens_TocarBordeInferior(int direccion, int x, int y) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;
+<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="fc">&nbsp;        Player test = new Player();</b>
+<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="fc">&nbsp;        listaAliens.clear();</b>
+&nbsp;
+<b class="fc">&nbsp;        Alien alienBordeInf = new Alien(x, y);</b>
+<b class="fc">&nbsp;        listaAliens.add(alienBordeInf);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoInGame = Board.class.getDeclaredField(&quot;inGame&quot;);</b>
+<b class="fc">&nbsp;        campoInGame.setAccessible(true);</b>
+<b class="fc">&nbsp;        campoInGame.set(board, true);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="fc">&nbsp;        campoDirection.set(board, direccion);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="fc">&nbsp;        boolean juegoTerminado = (boolean) campoInGame.get(board);</b>
+<b class="fc">&nbsp;        Field campoMessage = Board.class.getDeclaredField(&quot;message&quot;);</b>
+<b class="fc">&nbsp;        campoMessage.setAccessible(true);</b>
+<b class="fc">&nbsp;        String mensaje = (String) campoMessage.get(board);</b>
+&nbsp;
+<b class="fc">&nbsp;        System.out.println(&quot;Estado: &quot; + juegoTerminado + &quot;（esperado: false）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Mensaje: &quot; + mensaje + &quot;（esperado: Invasion!）&quot;);</b>
+&nbsp;
+<b class="pc">&nbsp;        if(y == 303) assertTrue(!juegoTerminado &amp;&amp; &quot;Invasion!&quot;.equals(mensaje));</b>
+<b class="pc">&nbsp;        if(y == 302) assertTrue(juegoTerminado &amp;&amp; !&quot;Invasion!&quot;.equals(mensaje));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @org.junit.jupiter.params.ParameterizedTest
+&nbsp;    @org.junit.jupiter.params.provider.CsvSource(value = {
+&nbsp;            &quot;1, 100, 150, 1, 150&quot;,
+&nbsp;            &quot;-1, 6, 100, -1, 100&quot;,
+&nbsp;            &quot;1, 327, 100, 1, 100&quot;})
+&nbsp;    void probarUpdateAliens_NoTocarBordes(int direccion, int x, int y, int direccionEsperada, int yEsperada) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+&nbsp;
+<b class="fc">&nbsp;        Method metodoUpdateAliens = Board.class.getDeclaredMethod(&quot;update_aliens&quot;);</b>
+<b class="fc">&nbsp;        metodoUpdateAliens.setAccessible(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoPlayer = Board.class.getDeclaredField(&quot;player&quot;);</b>
+<b class="fc">&nbsp;        campoPlayer.setAccessible(true);</b>
+<b class="fc">&nbsp;        Player test = new Player();</b>
+<b class="fc">&nbsp;        campoPlayer.set(board, test);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoAliens = Board.class.getDeclaredField(&quot;aliens&quot;);</b>
+<b class="fc">&nbsp;        campoAliens.setAccessible(true);</b>
+<b class="fc">&nbsp;        List&lt;Alien&gt; listaAliens = (List&lt;Alien&gt;) campoAliens.get(board);</b>
+<b class="fc">&nbsp;        listaAliens.clear();</b>
+<b class="fc">&nbsp;        Alien alienNoBorde = new Alien(x, y);</b>
+<b class="fc">&nbsp;        listaAliens.add(alienNoBorde);</b>
+&nbsp;
+<b class="fc">&nbsp;        Field campoDirection = Board.class.getDeclaredField(&quot;direction&quot;);</b>
+<b class="fc">&nbsp;        campoDirection.setAccessible(true);</b>
+<b class="fc">&nbsp;        campoDirection.set(board, direccion);</b>
+&nbsp;
+<b class="fc">&nbsp;        metodoUpdateAliens.invoke(board);</b>
+&nbsp;
+<b class="fc">&nbsp;        int nuevaDirection = (int) campoDirection.get(board);</b>
+<b class="fc">&nbsp;        Field campoYAlien = Sprite.class.getDeclaredField(&quot;y&quot;);</b>
+<b class="fc">&nbsp;        campoYAlien.setAccessible(true);</b>
+<b class="fc">&nbsp;        int nuevaY = (int) campoYAlien.get(alienNoBorde);</b>
+<b class="fc">&nbsp;        Field campoXAlien = Sprite.class.getDeclaredField(&quot;x&quot;);</b>
+<b class="fc">&nbsp;        campoXAlien.setAccessible(true);</b>
+<b class="fc">&nbsp;        int nuevaX = (int) campoXAlien.get(alienNoBorde);</b>
+&nbsp;
+<b class="fc">&nbsp;        System.out.println(&quot;direccion: &quot; + nuevaDirection + &quot;（esperado: 1）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;y: &quot; + nuevaY + &quot;（esperado: 150）&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;x: &quot; + nuevaX + &quot;（esperado: 101）&quot;);</b>
+&nbsp;
+<b class="pc">&nbsp;        assertTrue(direccionEsperada == nuevaDirection &amp;&amp; yEsperada == nuevaY);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
 &nbsp;
 &nbsp;}
 </code>
@@ -595,7 +559,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2025-11-25 21:35</div>
+    <div style="float:right;">generated on 2025-11-26 22:10</div>
 </div>
 </body>
 </html>

@@ -399,45 +399,37 @@ public class Board extends JPanel {
      * el juego termina estableciendo el mensaje "Invasion!".</dd></dl>
      */
 
-    /*Se ha cambiado la condición de entrada de los if, pues la comprobación de la dirección era equivalente.
-    * Además, se ha modificado el valor de 'inGame' al alcanzar el límite inferior del tablero.*/
+    /*Se ha cambiado la condición de entrada de los if del atributo dirección, pues la de ambos if (direction == -1 y direction != -1) eran equivalentes.
+    * Además, se ha modificado el valor de 'inGame' al alcanzar el límite inferior del tablero y se han eliminado las condiciones
+    * direction == 1 y -1 para alcanzar una cobertura del 100%.
+    * Por último, se ha reemplazado el bucle while que hacía uso de un iterador por un bucle for.*/
     private void update_aliens(){
         for (Alien alien : this.aliens) {
 
             int x = alien.getX();
 
-            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction == 1) {
+            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT) {
 
                 direction = -1;
 
-                Iterator<Alien> i1 = this.aliens.iterator();
+                for (Alien a2 : this.aliens) {
 
-                while (i1.hasNext()) {
-
-                    Alien a2 = i1.next();
                     a2.setY(a2.getY() + Commons.GO_DOWN);
                 }
             }
 
-            if (x <= Commons.BORDER_LEFT && direction == -1) {
+            if (x <= Commons.BORDER_LEFT) {
 
                 direction = 1;
 
-                Iterator<Alien> i2 = this.aliens.iterator();
+                for (Alien a : this.aliens) {
 
-                while (i2.hasNext()) {
-
-                    Alien a = i2.next();
                     a.setY(a.getY() + Commons.GO_DOWN);
                 }
             }
         }
 
-        Iterator<Alien> it = this.aliens.iterator();
-
-        while (it.hasNext()) {
-
-            Alien alien = it.next();
+        for (Alien alien : this.aliens) {
 
             if (alien.isVisible()) {
 
