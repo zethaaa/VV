@@ -296,6 +296,8 @@ public class Board extends JPanel {
      * ({@link Commons#NUMBER_OF_ALIENS_TO_DESTROY}), el juego se marca como finalizado,
      * y se establece el mensaje "<code>Game won!</code>".</dd></dl>
      */
+
+    /*Se ha añadido un else para que no se actualicen los componentes del juego*/
     public void update() {
 
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
@@ -303,13 +305,13 @@ public class Board extends JPanel {
             inGame = false;
             timer.stop();
             message = "Game won!";
+        }else {
+            // player
+            this.player.act();
+            update_shots();
+            update_aliens();
+            update_bomb();
         }
-
-        // player
-        this.player.act();
-        update_shots();
-        update_aliens();
-        update_bomb();
     }
 
     /**
@@ -396,12 +398,15 @@ public class Board extends JPanel {
      * {@link Commons#GROUND} + {@link Commons#ALIEN_HEIGHT}),
      * el juego termina estableciendo el mensaje "Invasion!".</dd></dl>
      */
+
+    /*Se ha cambiado la condición de entrada de los if, pues la comprobación de la dirección era equivalente.
+    * Además, se ha modificado el valor de 'inGame' al alcanzar el límite inferior del tablero.*/
     private void update_aliens(){
         for (Alien alien : this.aliens) {
 
             int x = alien.getX();
 
-            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction == -1) {
+            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction == 1) {
 
                 direction = -1;
 
@@ -414,7 +419,7 @@ public class Board extends JPanel {
                 }
             }
 
-            if (x <= Commons.BORDER_LEFT && direction != 1) {
+            if (x <= Commons.BORDER_LEFT && direction == -1) {
 
                 direction = 1;
 
@@ -439,7 +444,7 @@ public class Board extends JPanel {
                 int y = alien.getY();
 
                 if (y > Commons.GROUND + Commons.ALIEN_HEIGHT) {
-                    inGame = true;
+                    inGame = false;
                     message = "Invasion!";
                 }
 

@@ -159,227 +159,6 @@ public class BoardTestCajaBlanca {
     }
 
 
-    @Test
-    void update_aliensPrimerCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-        // para el metodo privado de update_aliens
-        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
-        metodoUpdateAliens.setAccessible(true);
-
-        // para no dar error de player nulo
-        Field campoPlayer = Board.class.getDeclaredField("player");
-        campoPlayer.setAccessible(true);
-        Player test = new Player();
-        campoPlayer.set(board, test);
-
-        // lista de aliens
-        Field campoAliens = Board.class.getDeclaredField("aliens");
-        campoAliens.setAccessible(true);
-        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
-        listaAliens.clear();
-        Alien alienBordeIzq = new Alien(Commons.BORDER_LEFT, 100);
-        listaAliens.add(alienBordeIzq);
-
-        // inicializar moviendose a izq y toca borde（-1）
-        Field campoDirection = Board.class.getDeclaredField("direction");
-        campoDirection.setAccessible(true);
-        campoDirection.set(board, -1);
-
-
-        metodoUpdateAliens.invoke(board);
-
-        int nuevaDirection = (int) campoDirection.get(board);
-        Field campoYAlien = Sprite.class.getDeclaredField("y");
-        campoYAlien.setAccessible(true);
-        int nuevaY = (int) campoYAlien.get(alienBordeIzq);
-        Field campoXAlien = Sprite.class.getDeclaredField("x");
-        campoXAlien.setAccessible(true);
-        int nuevaX = (int) campoXAlien.get(alienBordeIzq);
-
-        System.out.println("direccion: " + nuevaDirection + "（esperado: 1）");
-        System.out.println("y: " + nuevaY + "（esperado: " + (100 + Commons.GO_DOWN) + "）");
-        System.out.println("x: " + nuevaX + "（esperado: " + (Commons.BORDER_LEFT + 1) + "）");
-
-        assertTrue(nuevaDirection == 1 && nuevaY == 100 + Commons.GO_DOWN);
-
-
-    }
-    @Test
-    void update_aliensCuartoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-
-        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
-        metodoUpdateAliens.setAccessible(true);
-
-
-        Field campoPlayer = Board.class.getDeclaredField("player");
-        campoPlayer.setAccessible(true);
-        Player test = new Player();
-        campoPlayer.set(board, test);
-
-
-        Field campoAliens = Board.class.getDeclaredField("aliens");
-        campoAliens.setAccessible(true);
-        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
-        listaAliens.clear();
-
-        int posXRight = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;
-        Alien alienBordeDer = new Alien(posXRight, 100);
-        listaAliens.add(alienBordeDer);
-
-        Field campoDirection = Board.class.getDeclaredField("direction");
-        campoDirection.setAccessible(true);
-        campoDirection.set(board, 1);
-
-        metodoUpdateAliens.invoke(board);
-
-        int nuevaDirection = (int) campoDirection.get(board);
-
-        Field campoYAlien = Sprite.class.getDeclaredField("y");
-        campoYAlien.setAccessible(true);
-        int nuevaY = (int) campoYAlien.get(alienBordeDer);
-
-        Field campoXAlien = Sprite.class.getDeclaredField("x");
-        campoXAlien.setAccessible(true);
-        int nuevaX = (int) campoXAlien.get(alienBordeDer);
-
-        System.out.println("direccion: " + nuevaDirection + "（esperado: -1）");
-        System.out.println("pos y: " + nuevaY + "（esperado: " + (100 + Commons.GO_DOWN) + "）");
-        System.out.println("pos x: " + nuevaX + "（esperado: " + (posXRight - 1) + "）");
-
-        assertTrue(-1 == nuevaDirection);
-        assertEquals(100 + Commons.GO_DOWN, nuevaY);
-        assertEquals(posXRight - 1, nuevaX); //se prueba? es responsabilidad de act
-    }
-
-    @Test
-    void update_aliensTercerCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-
-        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
-        metodoUpdateAliens.setAccessible(true);
-
-        Field campoPlayer = Board.class.getDeclaredField("player");
-        campoPlayer.setAccessible(true);
-        Player test = new Player();
-        campoPlayer.set(board, test);
-
-        Field campoAliens = Board.class.getDeclaredField("aliens");
-        campoAliens.setAccessible(true);
-        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
-        listaAliens.clear();
-        Alien alienNoBorde = new Alien(100, 150);
-        listaAliens.add(alienNoBorde);
-
-        Field campoDirection = Board.class.getDeclaredField("direction");
-        campoDirection.setAccessible(true);
-        campoDirection.set(board, 1);
-
-        metodoUpdateAliens.invoke(board);
-
-        int nuevaDirection = (int) campoDirection.get(board);
-        Field campoYAlien = Sprite.class.getDeclaredField("y");
-        campoYAlien.setAccessible(true);
-        int nuevaY = (int) campoYAlien.get(alienNoBorde);
-        Field campoXAlien = Sprite.class.getDeclaredField("x");
-        campoXAlien.setAccessible(true);
-        int nuevaX = (int) campoXAlien.get(alienNoBorde);
-
-        System.out.println("direccion: " + nuevaDirection + "（esperado: 1）");
-        System.out.println("y: " + nuevaY + "（esperado: 150）");
-        System.out.println("x: " + nuevaX + "（esperado: 101）");
-
-        assertTrue(1 == nuevaDirection && 150 == nuevaY);
-
-    }
-
-    @Test
-    void update_aliensSextoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-
-        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
-        metodoUpdateAliens.setAccessible(true);
-
-        Field campoPlayer = Board.class.getDeclaredField("player");
-        campoPlayer.setAccessible(true);
-        Player test = new Player();
-        campoPlayer.set(board, test);
-
-        Field campoAliens = Board.class.getDeclaredField("aliens");
-        campoAliens.setAccessible(true);
-        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
-        listaAliens.clear();
-
-        Alien alienBordeInf = new Alien(100, 303);
-        listaAliens.add(alienBordeInf);
-
-        Field campoInGame = Board.class.getDeclaredField("inGame");
-        campoInGame.setAccessible(true);
-        campoInGame.set(board, true);
-
-        Field campoDirection = Board.class.getDeclaredField("direction");
-        campoDirection.setAccessible(true);
-        campoDirection.set(board, -1);
-
-
-        metodoUpdateAliens.invoke(board);
-
-        boolean juegoTerminado = (boolean) campoInGame.get(board);
-        Field campoMessage = Board.class.getDeclaredField("message");
-        campoMessage.setAccessible(true);
-        String mensaje = (String) campoMessage.get(board);
-
-        System.out.println("Estado: " + juegoTerminado + "（esperado: false）");
-        System.out.println("Mensaje: " + mensaje + "（esperado: Invasion!）");
-        assertTrue(!juegoTerminado && "Invasion!".equals(mensaje));
-    }
-
-    @Test
-    void update_aliensSegundoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
-        metodoUpdateAliens.setAccessible(true);
-
-        Field campoPlayer = Board.class.getDeclaredField("player");
-        campoPlayer.setAccessible(true);
-        Player test = new Player();
-        campoPlayer.set(board, test);
-
-        Field campoAliens = Board.class.getDeclaredField("aliens");
-        campoAliens.setAccessible(true);
-        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
-        listaAliens.clear();
-        Alien alienNoBorde = new Alien(100, 150);
-        listaAliens.add(alienNoBorde);
-        alienNoBorde.setVisible(false);
-
-        Field campoDirection = Board.class.getDeclaredField("direction");
-        campoDirection.setAccessible(true);
-        campoDirection.set(board, 1);
-
-        metodoUpdateAliens.invoke(board);
-
-    }
-
-    @Test
-    void update_aliensQuintoCamino() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
-        metodoUpdateAliens.setAccessible(true);
-
-        Field campoPlayer = Board.class.getDeclaredField("player");
-        campoPlayer.setAccessible(true);
-        Player test = new Player();
-        campoPlayer.set(board, test);
-
-        Field campoAliens = Board.class.getDeclaredField("aliens");
-        campoAliens.setAccessible(true);
-        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
-        listaAliens.clear();
-
-        Field campoDirection = Board.class.getDeclaredField("direction");
-        campoDirection.setAccessible(true);
-        campoDirection.set(board, 1);
-
-        metodoUpdateAliens.invoke(board);
-
-    }
-
-
 
 
     @Test
@@ -479,6 +258,191 @@ public class BoardTestCajaBlanca {
             throw new RuntimeException(e);
         }
     }
+
+
+    @Test
+    void probarUpdateAliens_TocarBordeDerecho() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+
+        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
+        metodoUpdateAliens.setAccessible(true);
+
+
+        Field campoPlayer = Board.class.getDeclaredField("player");
+        campoPlayer.setAccessible(true);
+        Player test = new Player();
+        campoPlayer.set(board, test);
+
+
+        Field campoAliens = Board.class.getDeclaredField("aliens");
+        campoAliens.setAccessible(true);
+        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
+        listaAliens.clear();
+
+        int posXRight = Commons.BOARD_WIDTH - Commons.BORDER_RIGHT;
+        Alien alienBordeDer = new Alien(posXRight, 100);
+        listaAliens.add(alienBordeDer);
+
+        Field campoDirection = Board.class.getDeclaredField("direction");
+        campoDirection.setAccessible(true);
+        campoDirection.set(board, 1);
+
+        metodoUpdateAliens.invoke(board);
+
+        int nuevaDirection = (int) campoDirection.get(board);
+
+        Field campoYAlien = Sprite.class.getDeclaredField("y");
+        campoYAlien.setAccessible(true);
+        int nuevaY = (int) campoYAlien.get(alienBordeDer);
+
+        Field campoXAlien = Sprite.class.getDeclaredField("x");
+        campoXAlien.setAccessible(true);
+        int nuevaX = (int) campoXAlien.get(alienBordeDer);
+
+        System.out.println("direccion: " + nuevaDirection + "（esperado: -1）");
+        System.out.println("pos y: " + nuevaY + "（esperado: " + (100 + Commons.GO_DOWN) + "）");
+        System.out.println("pos x: " + nuevaX + "（esperado: " + (posXRight - 1) + "）");
+
+        assertTrue(-1 == nuevaDirection);
+        assertEquals(100 + Commons.GO_DOWN, nuevaY);
+        assertEquals(posXRight - 1, nuevaX); //se prueba? es responsabilidad de act
+    }
+
+    @Test
+    void probarUpdateAliens_TocarBordeIzquierdo() throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+        // para el metodo privado de update_aliens
+        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
+        metodoUpdateAliens.setAccessible(true);
+
+        // para no dar error de player nulo
+        Field campoPlayer = Board.class.getDeclaredField("player");
+        campoPlayer.setAccessible(true);
+        Player test = new Player();
+        campoPlayer.set(board, test);
+
+        // lista de aliens
+        Field campoAliens = Board.class.getDeclaredField("aliens");
+        campoAliens.setAccessible(true);
+        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
+        listaAliens.clear();
+        Alien alienBordeIzq = new Alien(Commons.BORDER_LEFT, 100);
+        listaAliens.add(alienBordeIzq);
+
+        // inicializar moviendose a izq y toca borde（-1）
+        Field campoDirection = Board.class.getDeclaredField("direction");
+        campoDirection.setAccessible(true);
+        campoDirection.set(board, -1);
+
+
+        metodoUpdateAliens.invoke(board);
+
+        int nuevaDirection = (int) campoDirection.get(board);
+        Field campoYAlien = Sprite.class.getDeclaredField("y");
+        campoYAlien.setAccessible(true);
+        int nuevaY = (int) campoYAlien.get(alienBordeIzq);
+        Field campoXAlien = Sprite.class.getDeclaredField("x");
+        campoXAlien.setAccessible(true);
+        int nuevaX = (int) campoXAlien.get(alienBordeIzq);
+
+        System.out.println("direccion: " + nuevaDirection + "（esperado: 1）");
+        System.out.println("y: " + nuevaY + "（esperado: " + (100 + Commons.GO_DOWN) + "）");
+        System.out.println("x: " + nuevaX + "（esperado: " + (Commons.BORDER_LEFT + 1) + "）");
+
+        assertTrue(nuevaDirection == 1 && nuevaY == 100 + Commons.GO_DOWN);
+
+
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "-1, 100, 303",
+            "-1, 100, 302"}
+    )
+
+    void probarUpdateAliens_TocarBordeInferior(int direccion, int x, int y) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+
+        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
+        metodoUpdateAliens.setAccessible(true);
+
+        Field campoPlayer = Board.class.getDeclaredField("player");
+        campoPlayer.setAccessible(true);
+        Player test = new Player();
+        campoPlayer.set(board, test);
+
+        Field campoAliens = Board.class.getDeclaredField("aliens");
+        campoAliens.setAccessible(true);
+        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
+        listaAliens.clear();
+
+        Alien alienBordeInf = new Alien(x, y);
+        listaAliens.add(alienBordeInf);
+
+        Field campoInGame = Board.class.getDeclaredField("inGame");
+        campoInGame.setAccessible(true);
+        campoInGame.set(board, true);
+
+        Field campoDirection = Board.class.getDeclaredField("direction");
+        campoDirection.setAccessible(true);
+        campoDirection.set(board, direccion);
+
+
+        metodoUpdateAliens.invoke(board);
+
+        boolean juegoTerminado = (boolean) campoInGame.get(board);
+        Field campoMessage = Board.class.getDeclaredField("message");
+        campoMessage.setAccessible(true);
+        String mensaje = (String) campoMessage.get(board);
+
+        System.out.println("Estado: " + juegoTerminado + "（esperado: false）");
+        System.out.println("Mensaje: " + mensaje + "（esperado: Invasion!）");
+
+        if(y == 303) assertTrue(!juegoTerminado && "Invasion!".equals(mensaje));
+        if(y == 302) assertTrue(juegoTerminado && !"Invasion!".equals(mensaje));
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvSource(value = {
+            "1, 100, 150, 1, 150",
+            "-1, 6, 100, -1, 100",
+            "1, 327, 100, 1, 100"})
+    void probarUpdateAliens_NoTocarBordes(int direccion, int x, int y, int direccionEsperada, int yEsperada) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+
+        Method metodoUpdateAliens = Board.class.getDeclaredMethod("update_aliens");
+        metodoUpdateAliens.setAccessible(true);
+
+        Field campoPlayer = Board.class.getDeclaredField("player");
+        campoPlayer.setAccessible(true);
+        Player test = new Player();
+        campoPlayer.set(board, test);
+
+        Field campoAliens = Board.class.getDeclaredField("aliens");
+        campoAliens.setAccessible(true);
+        List<Alien> listaAliens = (List<Alien>) campoAliens.get(board);
+        listaAliens.clear();
+        Alien alienNoBorde = new Alien(x, y);
+        listaAliens.add(alienNoBorde);
+
+        Field campoDirection = Board.class.getDeclaredField("direction");
+        campoDirection.setAccessible(true);
+        campoDirection.set(board, direccion);
+
+        metodoUpdateAliens.invoke(board);
+
+        int nuevaDirection = (int) campoDirection.get(board);
+        Field campoYAlien = Sprite.class.getDeclaredField("y");
+        campoYAlien.setAccessible(true);
+        int nuevaY = (int) campoYAlien.get(alienNoBorde);
+        Field campoXAlien = Sprite.class.getDeclaredField("x");
+        campoXAlien.setAccessible(true);
+        int nuevaX = (int) campoXAlien.get(alienNoBorde);
+
+        System.out.println("direccion: " + nuevaDirection + "（esperado: 1）");
+        System.out.println("y: " + nuevaY + "（esperado: 150）");
+        System.out.println("x: " + nuevaX + "（esperado: 101）");
+
+        assertTrue(direccionEsperada == nuevaDirection && yEsperada == nuevaY);
+
+    }
+
 
 
 

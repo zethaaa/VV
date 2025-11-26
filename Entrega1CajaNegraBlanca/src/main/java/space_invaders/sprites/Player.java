@@ -56,6 +56,8 @@ public class Player extends Sprite {
      * <dl class="notes"><dt>Postcondición:</dt> <dd>La posición del jugador se actualiza
      * y permanece dentro de los límites del tablero de juego.</dd></dl>
      */
+
+
     public void act() {
 
         x += dx;
@@ -65,9 +67,9 @@ public class Player extends Sprite {
             x = 2;
         }
 
-        if (x >= Commons.BOARD_WIDTH - 2 * width) {
+        if (x >= Commons.BOARD_WIDTH - 2) {
 
-            x = Commons.BOARD_WIDTH + 2 * width;
+            x = Commons.BOARD_WIDTH - 2;
         }
     }
 
