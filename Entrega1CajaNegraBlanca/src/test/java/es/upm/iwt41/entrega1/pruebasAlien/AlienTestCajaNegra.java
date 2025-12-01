@@ -37,6 +37,8 @@ public class AlienTestCajaNegra {
             delimiterString = ",")
     void initAlien(int x, int y, int esperado_x, int esperado_y) throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Alien newAlien = new Alien(x, y);
+        System.out.println("X: " + x + "（esperado: " + esperado_x + "）");
+        System.out.println("Y: " + y + "（esperado: " + esperado_y + "）");
 
         assertEquals(esperado_x, newAlien.getX());
         assertEquals(esperado_y, newAlien.getY());
