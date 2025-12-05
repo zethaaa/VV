@@ -297,7 +297,7 @@ public class Board extends JPanel {
      * y se establece el mensaje "<code>Game won!</code>".</dd></dl>
      */
 
-    /*Se ha añadido un else para que no se actualicen los componentes del juego*/
+    /*Se ha añadido un else para que no se actualicen los componentes del juego cuando aún no se han eliminado a todos los aliens*/
     public void update() {
 
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
@@ -403,7 +403,7 @@ public class Board extends JPanel {
     * Además, se ha modificado el valor de 'inGame' al alcanzar el límite inferior del tablero y se han eliminado las condiciones
     * direction == 1 y -1 para alcanzar una cobertura del 100%.
     * Por último, se ha reemplazado el bucle while que hacía uso de un iterador por un bucle for.*/
-    private void update_aliens(){
+    public void update_aliens(){
         for (Alien alien : this.aliens) {
 
             int x = alien.getX();
@@ -440,7 +440,7 @@ public class Board extends JPanel {
                     message = "Invasion!";
                 }
 
-                alien.act(direction);
+                alien.act(direction); //debería estar al principio??
             }
         }
 
@@ -473,7 +473,7 @@ public class Board extends JPanel {
      * Las bombas que alcanzan el suelo (límite calculado con {@link Commons#GROUND} -
      * {@link Commons#BOMB_HEIGHT}) se marcan como destruidas.</dd></dl>
      */
-    private void update_bomb(){
+    public void update_bomb(){
         var generator = new Random();
 
         for (Alien alien : this.aliens) {

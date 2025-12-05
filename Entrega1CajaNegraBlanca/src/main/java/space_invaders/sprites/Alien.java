@@ -47,7 +47,7 @@ public class Alien extends Sprite {
     /**
      * Se valida la x y la y independientemente
      */
-     private void initAlien(int x, int y) {
+     public void initAlien(int x, int y) {
 
          // Validar x (independiente de y)
          if (x > Commons.BOARD_WIDTH) {
