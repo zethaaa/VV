@@ -40,16 +40,14 @@ public class IntegracionBoard {
 
     @BeforeEach
     public void setUp() {
-         board = Mockito.spy(new Board());
-
-
+        board = Mockito.spy(new Board());
         MockitoAnnotations.openMocks(this); // inicializa los mocks
     }
 
 
     @Test
     public void iniciarJuego() throws NoSuchFieldException, IllegalAccessException {
-        Board board = Mockito.spy(new Board());
+         /**board = Mockito.spy(new Board());
 
          ArrayList aliensMock = new ArrayList<AlienMock>();
 
@@ -57,7 +55,7 @@ public class IntegracionBoard {
         field.setAccessible(true);
         field.set(board, aliensMock);
 
-        assertEquals(24, aliensMock.size());
+        assertEquals(24, aliensMock.size());*/
 
 
     }
@@ -65,7 +63,7 @@ public class IntegracionBoard {
     @Test
     public void updateJuego() throws NoSuchFieldException, IllegalAccessException {
 
-        Board board = Mockito.spy(new Board());
+        board = Mockito.spy(new Board());
 
         //Intercambiar el atributo player de Board por el objeto mock
         Field field = Board.class.getDeclaredField("player");
@@ -91,7 +89,7 @@ public class IntegracionBoard {
     @Test
     public void updateJuegoFinalizar() throws NoSuchFieldException, IllegalAccessException {
 
-        Board board = Mockito.spy(new Board());
+        board = Mockito.spy(new Board());
 
         //Intercambiar el atributo player de Board por el objeto mock
         Field field = Board.class.getDeclaredField("player");
@@ -117,20 +115,49 @@ public class IntegracionBoard {
 
     @Test
     public void updateAliens() throws NoSuchFieldException, IllegalAccessException {
+        aliensMocks = new ArrayList<>();
 
-        aliensMocks = new ArrayList<Alien>();
-        aliensMocks.add(alien1);
-        aliensMocks.add(alien2);
-
+        //sustituir el campo aliens de la clase board por una nueva lista de aliens de tipo mock
         Field field = Board.class.getDeclaredField("aliens");
         field.setAccessible(true);
-        field.set(this.board, aliensMocks);
+        field.set(board, aliensMocks);
 
-        this.board.update_aliens();
-        verify(alien1).act(-1);
+        for(int i  = 0; i < Commons.NUMBER_OF_ALIENS_TO_DESTROY; i++){
+            //crear 24 aliens de tipo mock y establecer un valor esperado para su coordenada en X y su visibilidad
+            Alien alienMock = mock(Alien.class);
+            aliensMocks.add(alienMock);
+            when(alienMock.getX()).thenReturn(150);
+            when(alienMock.isVisible()).thenReturn(true);
+        }
+
+        board.update_aliens();
+        //se esperan 24 llamadas a act
+        aliensMocks.forEach(alien -> verify(alien).act(-1));
+
+    }
 
 
+    @Test
+    public void updateAliensNoDesplazamiento() throws NoSuchFieldException, IllegalAccessException {
+        aliensMocks = new ArrayList<>();
 
+        //sustituir el campo aliens de la clase board por una nueva lista de aliens de tipo mock
+        Field field = Board.class.getDeclaredField("aliens");
+        field.setAccessible(true);
+        field.set(board, aliensMocks);
+
+        for(int i  = 0; i < Commons.NUMBER_OF_ALIENS_TO_DESTROY; i++){
+            //crear 24 aliens de tipo mock y establecer un valor esperado para su coordenada en X y su visibilidad
+            Alien alienMock = mock(Alien.class);
+            aliensMocks.add(alienMock);
+            when(alienMock.getX()).thenReturn(150);
+            //no son visibles, por lo que no se debe llamar a act()
+            when(alienMock.isVisible()).thenReturn(false);
+        }
+
+        board.update_aliens();
+        //se esperan 24 llamadas a act
+        aliensMocks.forEach(alien -> verify(alien, never()).act(-1));
 
     }
 

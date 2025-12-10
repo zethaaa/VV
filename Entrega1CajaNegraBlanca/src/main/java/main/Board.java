@@ -404,7 +404,10 @@ public class Board extends JPanel {
     * direction == 1 y -1 para alcanzar una cobertura del 100%.
     * Por último, se ha reemplazado el bucle while que hacía uso de un iterador por un bucle for.*/
     public void update_aliens(){
+
+
         for (Alien alien : this.aliens) {
+
 
             int x = alien.getX();
 
@@ -439,7 +442,6 @@ public class Board extends JPanel {
                     inGame = false;
                     message = "Invasion!";
                 }
-
                 alien.act(direction);
             }
         }
