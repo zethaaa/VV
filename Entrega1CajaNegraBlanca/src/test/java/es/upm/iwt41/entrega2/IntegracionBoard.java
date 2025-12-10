@@ -9,11 +9,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import space_invaders.sprites.Alien;
+import space_invaders.sprites.AlienMock;
 import space_invaders.sprites.Player;
 import space_invaders.sprites.Shot;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class IntegracionBoard {
@@ -22,18 +26,39 @@ public class IntegracionBoard {
     private Player player;
     @Mock
     private Shot shot;
+
+
+    private Board board;
+
     @Mock
-    private Alien alien;
+    private List<Alien> aliensMocks;
+    @Mock
+    private Alien alien1;
+    @Mock
+    private Alien alien2;
 
 
     @BeforeEach
     public void setUp() {
+         board = Mockito.spy(new Board());
+
+
         MockitoAnnotations.openMocks(this); // inicializa los mocks
     }
 
 
     @Test
-    public void iniciarJuego(){
+    public void iniciarJuego() throws NoSuchFieldException, IllegalAccessException {
+        Board board = Mockito.spy(new Board());
+
+         ArrayList aliensMock = new ArrayList<AlienMock>();
+
+        Field field = Board.class.getDeclaredField("aliens");
+        field.setAccessible(true);
+        field.set(board, aliensMock);
+
+        assertEquals(24, aliensMock.size());
+
 
     }
 
@@ -81,7 +106,7 @@ public class IntegracionBoard {
         board.setDeaths(Commons.NUMBER_OF_ALIENS_TO_DESTROY);
         board.update();
 
-        //comprobar que se llamó al método act y métodos update
+        //comprobar que no se llamó al método act y métodos update
         verify(player, never()).act();
         verify(board, never()).update_shots();
         verify(board, never()).update_aliens();
@@ -89,4 +114,25 @@ public class IntegracionBoard {
 
     }
 
+
+    @Test
+    public void updateAliens() throws NoSuchFieldException, IllegalAccessException {
+
+        aliensMocks = new ArrayList<Alien>();
+        aliensMocks.add(alien1);
+        aliensMocks.add(alien2);
+
+        Field field = Board.class.getDeclaredField("aliens");
+        field.setAccessible(true);
+        field.set(this.board, aliensMocks);
+
+        this.board.update_aliens();
+        verify(alien1).act(-1);
+
+
+
+
+    }
+
 }
+

@@ -25,6 +25,8 @@ public class Alien extends Sprite {
         initAlien(x, y);
     }
 
+    public Alien(){}
+    //public Alien(){}
     /**
      * {@summary Configura el estado inicial del alien estableciendo su posición en el tablero.}
      * 
