@@ -22,13 +22,9 @@ public class IntegracionAlien {
 
     @Test
     public void constructorAlien(){
-        assertNotNull(alien.getX());
-        assertNotNull(alien.getY());
-    }
-
-    @Test
-    public void initAlien(){
-        assertNotNull(alien.getBomb().getY());
-        assertNotNull(alien.getBomb().getX());
+        assertEquals(150, alien.getX());
+        assertEquals(150, alien.getY());
+        assertEquals(150, alien.getBomb().getY());
+        assertEquals(150, alien.getBomb().getX());
     }
 }

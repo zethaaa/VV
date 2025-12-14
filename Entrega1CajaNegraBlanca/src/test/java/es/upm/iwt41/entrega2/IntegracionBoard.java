@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class IntegracionBoard {
@@ -27,15 +27,10 @@ public class IntegracionBoard {
     @Mock
     private Shot shot;
 
-
     private Board board;
 
     @Mock
     private List<Alien> aliensMocks;
-    @Mock
-    private Alien alien1;
-    @Mock
-    private Alien alien2;
 
 
     @BeforeEach
@@ -47,17 +42,14 @@ public class IntegracionBoard {
 
     @Test
     public void iniciarJuego() throws NoSuchFieldException, IllegalAccessException {
-         /**board = Mockito.spy(new Board());
 
-         ArrayList aliensMock = new ArrayList<AlienMock>();
-
-        Field field = Board.class.getDeclaredField("aliens");
-        field.setAccessible(true);
-        field.set(board, aliensMock);
-
-        assertEquals(24, aliensMock.size());*/
-
-
+        assertAll(
+            () -> assertEquals(
+                    Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS,
+                    board.getAliens().size()),
+            () -> assertNotNull(board.getPlayer()),
+            () -> assertNotNull(board.getShot())
+        );
     }
 
     @Test
@@ -156,7 +148,7 @@ public class IntegracionBoard {
         }
 
         board.update_aliens();
-        //se esperan 24 llamadas a act
+        //se esperan 0 llamadas a act
         aliensMocks.forEach(alien -> verify(alien, never()).act(-1));
 
     }
