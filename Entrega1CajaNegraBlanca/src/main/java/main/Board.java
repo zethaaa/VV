@@ -336,7 +336,7 @@ public class Board extends JPanel {
      */
 
 
-    /*Se ha eliminado la línea this.shot.setX(y) y de la condición 'this.shot.isVisible()' en el if anidado
+    /*Se ha eliminado la línea this.shot.setX(y) y la condición 'this.shot.isVisible()' en el if anidado
     debido a la redundancia que suponía con el primer if.*/
     public void update_shots() {
         if (this.shot.isVisible()) {
