@@ -4,6 +4,7 @@ import main.Commons;
 
 import javax.swing.ImageIcon;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 
 /**
  * {@summary Clase que representa al jugador en el juego Space Invaders.}
@@ -37,6 +38,8 @@ public class Player extends Sprite {
         width = ii.getImage().getWidth(null);
         setImage(ii.getImage());
 
+
+
         int START_X = 179;
         setX(START_X);
 
@@ -65,11 +68,13 @@ public class Player extends Sprite {
 
         x += dx;
 
+        //Commons.BORDER_LEFT
         if (x <= 2) {
 
             x = 2;
         }
 
+        //Commons.BOARD_RIGHT
         if (x >= Commons.BOARD_WIDTH - 2) {
 
             x = Commons.BOARD_WIDTH - 2;

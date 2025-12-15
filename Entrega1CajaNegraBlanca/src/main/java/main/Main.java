@@ -18,7 +18,7 @@ public class Main extends JFrame  {
 
     /**
      * {@summary<span class="alert-small">⛔🧪</span> Inicializa la interfaz de usuario del juego.}
-     * 
+     *
      * Este método configura la ventana principal del juego, establece su título,
      * tamaño, comportamiento de cierre y posición en la pantalla. También añade
      * el panel de juego {@link Board} a la ventana.
@@ -39,7 +39,7 @@ public class Main extends JFrame  {
 
     /**
      * {@summary<span class="alert-small">⛔🧪</span> Punto de entrada principal del juego.}
-     * 
+     *
      * <br><br><span class="alert">⛔🧪 No es necesario probar esta clase mediante pruebas unitarias. </span>
      * @param args argumentos de línea de comandos (no se utilizan)
      */

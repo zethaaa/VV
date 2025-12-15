@@ -28,6 +28,7 @@
 
 
     <dependencies>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -50,6 +51,47 @@
             <version>5.14.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Gherkin -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>gherkin</artifactId>
+            <version>32.1.1</version>
+        </dependency>
+
+        <!-- Cucumber Core -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>7.23.0</version>
+        </dependency>
+
+        <!-- Cucumber Java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.23.0</version>
+            <scope>Test</scope>
+        </dependency>
+
+        <!-- Cucumber JUnit -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>7.23.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Motor de ejecución de Cucumber para JUnit Platform -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.21.0</version> <!-- misma versión que cucumber-java -->
+            <scope>test</scope>
+        </dependency>
+
+
+
     </dependencies>
 
 </project>

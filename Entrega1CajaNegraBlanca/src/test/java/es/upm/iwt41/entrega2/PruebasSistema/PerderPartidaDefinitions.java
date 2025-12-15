@@ -1,0 +1,88 @@
+/**package es.upm.iwt41.entrega2.PruebasSistema;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import main.Board;
+import main.Commons;
+import org.junit.Rule;
+import space_invaders.sprites.Alien;
+import space_invaders.sprites.Player;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class PerderPartidaDefinitions {
+
+    private Board board;
+
+
+    @Given("Dado el tablero del juego Space Invaders")
+    public void dado_el_tablero_del_juego_space_invaders() {
+        System.out.println(">>> ENTRO EN GIVEN");
+        board = new Board();
+        assertNotNull(board);
+    }
+
+
+    @When("una bomba alcanza la posicion del jugador")
+    public void una_bomba_alcanza_la_posicion_del_jugador() {
+        Alien alien = board.getAliens().get(0);
+        Player player = board.getPlayer();
+        alien.getBomb().setDestroyed(false);
+        alien.getBomb().setX(player.getX());
+        alien.getBomb().setY(player.getY());
+
+        board.update_bomb();
+
+        assertEquals(alien.getBomb().getX(), player.getX());
+        assertEquals(alien.getBomb().getY(), player.getY());
+    }
+
+    @Then("muere la nave del jugador")
+    public void muere_la_nave_del_jugador() {
+        assertTrue(board.getPlayer().isDying());
+    }
+
+    @And("se finaliza la partida")
+    public void se_finaliza_la_partida() {
+        assertFalse(board.isInGame());
+    }
+
+    @And("se muestra el mensaje {string}")
+    public void se_muestra_el_mensaje(String string) {
+        assertEquals(string, board.getMessage());
+    }
+
+    @When("un alien alcanza el límite inferior del tablero de juego")
+    public void un_alien_alcanza_el_tablero_de_juego() {
+        Alien alien = board.getAliens().get(0);
+        alien.setY(Commons.GROUND - Commons.BOMB_HEIGHT);
+        alien.setX(150);
+
+        board.update_aliens();
+
+        assertEquals(Commons.GROUND - Commons.BOMB_HEIGHT, alien.getY());
+    }
+
+    @When("no se cumple ninguna de las condiciones de derrota")
+        public void no_se_cumple_ninguna_de_las_condiciones_de_derrota(){
+        for(Alien alien : board.getAliens()){
+            alien.setY(150);
+            alien.getBomb().setY(150);
+            assertEquals(150, alien.getY());
+            assertEquals(150, alien.getBomb().getY());
+        }
+    }
+
+    @Then("la nave del jugador no muere")
+    public void la_nave_del_jugador_no_muere() {
+        assertFalse(board.getPlayer().isDying());
+    }
+
+    @And("continua la partida")
+    public void continua_la_partida() {
+        assertTrue(board.isInGame());
+    }
+}
+ */
