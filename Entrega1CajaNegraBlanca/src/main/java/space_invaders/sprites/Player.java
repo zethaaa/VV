@@ -61,23 +61,22 @@ public class Player extends Sprite {
      */
 
 
-    /*Se ha eliminado el atributo 'width' de la comprobación del segundo if, pues el valor 2 ya aporta un margen suficiente.
-    * También se ha corregido la reasignación de la posición del jugador al superar el límite derecho: Commons.BOARD_WIDTH + 2 a Commons.BOARD_WIDTH - 2.
-    * Anteriormente se posicionaba al jugador en una posición fuera de los límites.*/
+    /*Se han modificado los límites máximos, empleando las constantes ‘Commons.BORDER_RIGHT’ y ‘Commons.BORDER_LEFT’,
+    para que coincidan con los de los objetos alien en el atributo ‘update_aliens’.*/
     public void act() {
 
         x += dx;
 
         //Commons.BORDER_LEFT
-        if (x <= 2) {
+        if (x <= Commons.BORDER_LEFT) {
 
-            x = 2;
+            x = Commons.BORDER_LEFT;
         }
 
         //Commons.BOARD_RIGHT
-        if (x >= Commons.BOARD_WIDTH - 2) {
+        if (x >= Commons.BOARD_WIDTH) {
 
-            x = Commons.BOARD_WIDTH - 2;
+            x = Commons.BOARD_WIDTH;
         }
     }
 

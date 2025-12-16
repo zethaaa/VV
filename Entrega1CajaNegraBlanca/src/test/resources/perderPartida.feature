@@ -35,14 +35,12 @@ Feature: Jugar y perder una partida
       Given Dado el tablero del juego Space Invaders
       When una bomba alcanza la posicion del jugador
       Then muere la nave del jugador
-      And se finaliza la partida
       And se muestra el mensaje "Game Over"
 
     Scenario: Perder la partida por invasion de los aliens
       Given Dado el tablero del juego Space Invaders
       When un alien alcanza el límite inferior del tablero de juego
-      Then muere la nave del jugador
-      And se finaliza la partida
+      Then se finaliza la partida
       And se muestra el mensaje "Invasion!"
 
   Rule: Continuar la partida

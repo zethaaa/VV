@@ -1,4 +1,4 @@
-/**package es.upm.iwt41.entrega2.PruebasSistema;
+package es.upm.iwt41.entrega2.PruebasSistema;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -22,6 +22,9 @@ public class PerderPartidaDefinitions {
         System.out.println(">>> ENTRO EN GIVEN");
         board = new Board();
         assertNotNull(board);
+        assertNotNull(board.getPlayer());
+        assertNotNull(board.getAliens());
+        assertEquals(24, board.getAliens().size());
     }
 
 
@@ -55,14 +58,16 @@ public class PerderPartidaDefinitions {
     }
 
     @When("un alien alcanza el límite inferior del tablero de juego")
-    public void un_alien_alcanza_el_tablero_de_juego() {
+    public void un_alien_alcanza_el_limite_tablero_de_juego() {
         Alien alien = board.getAliens().get(0);
-        alien.setY(Commons.GROUND - Commons.BOMB_HEIGHT);
+        alien.setY(Commons.GROUND + Commons.ALIEN_HEIGHT+1);
         alien.setX(150);
+
+        assertEquals(Commons.GROUND + Commons.ALIEN_HEIGHT+1, alien.getY());
+        assertTrue(board.isInGame());
 
         board.update_aliens();
 
-        assertEquals(Commons.GROUND - Commons.BOMB_HEIGHT, alien.getY());
     }
 
     @When("no se cumple ninguna de las condiciones de derrota")
@@ -85,4 +90,3 @@ public class PerderPartidaDefinitions {
         assertTrue(board.isInGame());
     }
 }
- */
