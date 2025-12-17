@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import main.Board;
 import main.Commons;
+import main.Main;
 import org.junit.Rule;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
@@ -15,12 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PerderPartidaDefinitions {
 
     private Board board;
+    private Main main;
 
 
     @Given("Dado el tablero del juego Space Invaders")
     public void dado_el_tablero_del_juego_space_invaders() {
-        System.out.println(">>> ENTRO EN GIVEN");
-        board = new Board();
+        main = new Main();
         assertNotNull(board);
         assertNotNull(board.getPlayer());
         assertNotNull(board.getAliens());

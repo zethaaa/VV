@@ -99,7 +99,7 @@ public class Board extends JPanel {
      * {@summary <span class="alert-small">⛔🧪</span> Inicializa un nuevo tablero con las dimensiones predefinidas, le asigna un fondo de color negro, inicializa el contador de juego e inicia la partida.}
      * <br><br><span class="alert">⛔🧪 No es necesario probar este método mediante pruebas unitarias.</span>
      */
-    private void initBoard() {
+    public void initBoard() {
 
         addKeyListener(new TAdapter());
         setFocusable(true);
@@ -128,7 +128,7 @@ public class Board extends JPanel {
      * un objeto {@link Player} posicionado correctamente, y un objeto
      * {@link Shot} inicializado. Todos los elementos quedan listos para la interacción.</dd></dl>
      */
-    private void gameInit() {
+    public void gameInit() {
 
         this.aliens = new ArrayList<>();
 
@@ -451,7 +451,7 @@ public class Board extends JPanel {
 
     /**
      * {@summary Gestiona el lanzamiento, movimiento y colisiones de las bombas de los aliens.}
-     * 
+     *
      * <p>Este método controla el sistema de bombardeo de los aliens, generando aleatoriamente 
      * bombas mediante un número aleatorio en el rango 0-14 (bound 15) comparado con 
      * {@link Commons#CHANCE}. Las bombas se crean únicamente si el alien no tiene

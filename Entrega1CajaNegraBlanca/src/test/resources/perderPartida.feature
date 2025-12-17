@@ -13,14 +13,12 @@ Feature: Jugar y perder una partida
   Criterios de aceptación
   CA1: Dado el tablero de juego Space Invaders
   Cuando una bomba de un alien alcanza la nave del jugador
-  Entonces la nave del jugador muere (setDying)
-  Y se finaliza la partida (inGame == false)
+  Entonces la nave del jugador muere
   Y se muestra el mensaje 'Game Over'
 
   CA2: Dado el tablero de juego Space Invaders
   Cuando un alien alcanza el límite inferior del tablero de juego
-  Entonces la nave del jugador muere  (setDying)
-  Y se finaliza la partida
+  Entonces se finaliza la partida
   Y se muestra el mensaje 'Invasion!'
 
   CA3: Dado el tablero de juego Space Invaders

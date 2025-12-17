@@ -43,6 +43,8 @@ public class IntegracionBoard {
     @Test
     public void iniciarJuego() throws NoSuchFieldException, IllegalAccessException {
 
+        board = Mockito.spy(new Board());
+
         assertAll(
             () -> assertEquals(
                     Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS,
@@ -50,6 +52,7 @@ public class IntegracionBoard {
             () -> assertNotNull(board.getPlayer()),
             () -> assertNotNull(board.getShot())
         );
+
     }
 
     @Test
