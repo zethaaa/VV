@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.EventQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 
@@ -11,6 +13,7 @@ import javax.swing.JFrame;
  */
 public class Main extends JFrame  {
 
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     public Main() {
 
         initUI();
@@ -32,7 +35,9 @@ public class Main extends JFrame  {
         setTitle("Space Invaders");
         setSize(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
 
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setResizable(false);
         setLocationRelativeTo(null);
     }
@@ -50,5 +55,6 @@ public class Main extends JFrame  {
             var ex = new Main();
             ex.setVisible(true);
         });
+
     }
 }

@@ -6,22 +6,19 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import main.Board;
 import main.Commons;
-import main.Main;
-import org.junit.Rule;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PerderPartidaDefinitions {
+public class PerderGanarPartidaDefinitions {
 
     private Board board;
-    private Main main;
 
 
     @Given("Dado el tablero del juego Space Invaders")
     public void dado_el_tablero_del_juego_space_invaders() {
-        main = new Main();
+        board = new Board();
         assertNotNull(board);
         assertNotNull(board.getPlayer());
         assertNotNull(board.getAliens());
@@ -89,5 +86,32 @@ public class PerderPartidaDefinitions {
     @And("continua la partida")
     public void continua_la_partida() {
         assertTrue(board.isInGame());
+    }
+
+    @When("se eliminan todos los aliens")
+    public void se_eliminan_todos_los_aliens() {
+
+        for(Alien alien : board.getAliens()){
+            board.getShot().setX(alien.getX());
+            board.getShot().setY(alien.getY());
+            board.update_shots();
+        }
+
+        assertEquals(Commons.NUMBER_OF_ALIENS_TO_DESTROY, board.getDeaths());
+
+        board.update();
+    }
+
+    @When("Queda al menos un alien en el tablero")
+    public void queda_al_menos_un_alien_en_el_tablero() {
+
+        for(int i = 0; i < board.getAliens().size()-1; i++){
+            board.getShot().setX(board.getAliens().get(i).getX());
+            board.getShot().setY(board.getAliens().get(i).getY());
+            board.update_shots();
+        }
+        assertEquals(Commons.NUMBER_OF_ALIENS_TO_DESTROY-1, board.getDeaths());
+
+        board.update();
     }
 }
